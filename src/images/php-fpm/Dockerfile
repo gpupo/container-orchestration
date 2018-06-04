@@ -1,6 +1,15 @@
 FROM php:7.2-fpm
 
-RUN apt-get -q update; \
+
+LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.vendor="gpupo" \
+      org.label-schema.name="container-orchestration" \
+      org.label-schema.description="Image with PHP 7.2 and Debian" \
+      org.label-schema.url="https://github.com/gpupo/container-orchestration"
+
+
+RUN apt-get -q update; apt-get install -y --no-install-recommends apt-utils;\
     apt-get -q install -y git unzip zlib1g-dev libpng-dev; \
     apt-get -q install -y curl libmcrypt-dev mysql-client libicu-dev; \
     apt-get -q install -y libcurl4-openssl-dev; \
@@ -10,9 +19,9 @@ RUN apt-get -q update; \
     docker-php-ext-install mbstring;\
     pecl install apcu && docker-php-ext-enable apcu;
 
-RUN docker-php-ext-install gd opcache ctype curl;
+RUN docker-php-ext-install gd opcache ctype json mbstring;
 
-#RUN docker-php-ext-install json spl xml bcmath mbstring simplexml;
+#RUN docker-php-ext-install  spl xml bcmath  simplexml;
 
 WORKDIR /var/www/app
 

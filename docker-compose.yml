@@ -1,28 +1,33 @@
 version: '3'
+volumes:
+    php:
+        driver: local-persist
+        driver_opts:
+            mountpoint: ./shared/
+    logs:
+        driver: local-persist
+        driver_opts:
+            mountpoint: ./shared/
 services:
     php:
         container_name: php-fpm
         build:
-            context: ./src
-            dockerfile: ./images/php-fpm/Dockerfile
+            context: ./src/images/php-fpm/
         image: container-orchestration/php-fpm:latest
         ports:
             - "9000:9000"
         volumes:
-            - ./shared/app:/var/www/app:cached
-            - ./shared/logs/app:/var/www/app/var/logs:cached
+            - php:/var/www/app
+            - php:/var/www/app/var/logs
     nginx:
         container_name: nginx
         build:
-            context: ./src
-            dockerfile: ./images/nginx/Dockerfile
+            context: ./src/images/nginx/
         image: container-orchestration/nginx:latest
         ports:
             - "80:80"
         links:
             - php
         volumes:
-            from:
-                - php
-        volumes:
-            - ./shared/logs/nginx/:/var/log/nginx:cached
+            - logs:/var/log/nginx
+            - php:/var/www/app
