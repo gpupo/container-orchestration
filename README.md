@@ -10,7 +10,7 @@ Container-orchestration sets for automating deployment, scaling and management o
     cd container-orchestration;
     docker-compose up -d;
 
-Get the ``/etc/host`` line:
+Get the ``/etc/hosts`` line:
 
     echo $(docker network inspect bridge | grep Gateway | grep -o -E '[0-9\.]+') "container-orchestration-app.localhost"
 
