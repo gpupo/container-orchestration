@@ -1,7 +1,7 @@
 version: '3'
 services:
     php:
-        container_name: php-fpm
+        # container_name: php-fpm
         build:
             context: ./src/images/php-fpm/
         image: container-orchestration/php-fpm:latest
@@ -11,7 +11,7 @@ services:
             - ./shared/app:/var/www/app
             - ./shared/log/app:/var/www/app/var/logs
     nginx:
-        container_name: nginx
+        # container_name: nginx
         build:
             context: ./src/images/nginx/
         image: container-orchestration/nginx:latest

@@ -19,9 +19,9 @@ RUN apt-get -q update; apt-get install -y --no-install-recommends apt-utils;\
     docker-php-ext-install mbstring;\
     pecl install apcu && docker-php-ext-enable apcu;
 
-RUN docker-php-ext-install gd opcache ctype json mbstring;
+RUN docker-php-ext-install gd opcache ctype json mbstring spl;
 
-#RUN docker-php-ext-install  spl xml bcmath  simplexml;
+#RUN docker-php-ext-install   xml bcmath  simplexml;
 
 WORKDIR /var/www/app
 
