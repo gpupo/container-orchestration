@@ -1,10 +1,10 @@
 version: '3'
 services:
     php:
-        # container_name: php-fpm
+        container_name: php
         build:
             context: ./src/images/php-fpm/
-        image: container-orchestration/php-fpm:latest
+        image: gpupo/container-orchestration:php-latest
         ports:
             - "9000:9000"
         volumes:
@@ -13,10 +13,10 @@ services:
         networks:
             - backend
     nginx:
-        # container_name: nginx
+        container_name: nginx
         build:
             context: ./src/images/nginx/
-        image: container-orchestration/nginx:latest
+        image: gpupo/container-orchestration:nginx-latest
         ports:
             - "80:80"
         links:
@@ -26,6 +26,7 @@ services:
             - ./shared/app:/var/www/app
         networks:
             - frontend
+            - backend
 
 networks:
     frontend:

@@ -1,5 +1,7 @@
 FROM alpine:3.7
 
+EXPOSE 80
+
 LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
       org.label-schema.schema-version="1.0" \
       org.label-schema.vendor="gpupo" \
@@ -13,10 +15,9 @@ RUN apk add --update nginx curl vim git;\
 ADD nginx.conf /etc/nginx/
 ADD app.conf /etc/nginx/conf.d/
 
-RUN echo "upstream php-upstream { server php:9001; }" > /etc/nginx/conf.d/upstream.conf; \
+RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf; \
     adduser -D -g '' -G www-data www-data;
 
 CMD ["nginx"]
 
-EXPOSE 80
-EXPOSE 443
+WORKDIR /var/www/app
