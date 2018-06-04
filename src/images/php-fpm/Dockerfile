@@ -12,7 +12,7 @@ RUN apt-get -q update; \
 
 RUN docker-php-ext-install gd opcache ctype curl;
 
-RUN docker-php-ext-install json spl xml bcmath mbstring simplexml;
+#RUN docker-php-ext-install json spl xml bcmath mbstring simplexml;
 
 WORKDIR /var/www/app
 
