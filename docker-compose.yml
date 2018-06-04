@@ -28,6 +28,20 @@ services:
             - frontend
             - backend
 
+    elk:
+        container_name: elk
+        build:
+            context: ./src/images/elk/
+        image: gpupo/container-orchestration:elk-latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./shared/elk/logstash:/etc/logstash
+            - ./shared/elk/logstash/patterns:/opt/logstash/patterns
+        networks:
+            - frontend
+            - backend
+
 networks:
     frontend:
     backend:

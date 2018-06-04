@@ -17,3 +17,10 @@ Get the ``/etc/hosts`` line:
 Put your code on ./shared/
 
 Access http://container-orchestration-app.localhost
+
+
+## Development
+
+### Update Images
+
+    docker-composer build && docker push gpupo/container-orchestration

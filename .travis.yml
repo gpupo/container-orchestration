@@ -22,4 +22,3 @@ script:
   - docker-compose ps
   - docker-compose exec nginx ping php -c1
   - docker-compose exec php ping nginx -c1
-  - docker-compose exec nginx curl http://docker-app-v2.localhost/ | grep Hello
