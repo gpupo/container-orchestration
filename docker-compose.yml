@@ -1,11 +1,11 @@
 version: '3'
 volumes:
     php:
-        # driver: local-persist
+        driver: local-persist
         driver_opts:
             mountpoint: ./shared/
     logs:
-        # driver: local-persist
+        driver: local-persist
         driver_opts:
             mountpoint: ./shared/
 services:
