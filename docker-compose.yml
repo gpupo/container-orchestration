@@ -1,0 +1,28 @@
+version: '3'
+services:
+    php:
+        container_name: php-fpm
+        build:
+            context: ./src
+            dockerfile: ./images/php-fpm/Dockerfile
+        image: container-orchestration/php-fpm:latest
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./shared/app:/var/www/app:cached
+            - ./shared/logs/app:/var/www/app/var/logs:cached
+    nginx:
+        container_name: nginx
+        build:
+            context: ./src
+            dockerfile: ./images/nginx/Dockerfile
+        image: container-orchestration/nginx:latest
+        ports:
+            - "80:80"
+        links:
+            - php
+        volumes:
+            from:
+                - php
+        volumes:
+            - ./shared/logs/nginx/:/var/log/nginx:cached

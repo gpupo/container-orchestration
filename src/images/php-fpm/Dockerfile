@@ -8,8 +8,11 @@ RUN apt-get -q update; \
     docker-php-ext-install intl; \
     docker-php-ext-install zip pdo pdo_mysql pdo_sqlite; \
     docker-php-ext-install mbstring;\
-    pecl install apcu && docker-php-ext-enable apcu; \
-    docker-php-ext-install gd opcache ctype curl json spl xml bcmath mbstring reflection simplexml; \
+    pecl install apcu && docker-php-ext-enable apcu;
+
+RUN docker-php-ext-install gd opcache ctype curl;
+
+RUN docker-php-ext-install json spl xml bcmath mbstring simplexml;
 
 WORKDIR /var/www/app
 
