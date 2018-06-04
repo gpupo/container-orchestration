@@ -10,6 +10,8 @@ services:
         volumes:
             - ./shared/app:/var/www/app
             - ./shared/log/app:/var/www/app/var/logs
+        networks:
+            - backend
     nginx:
         # container_name: nginx
         build:
@@ -22,3 +24,9 @@ services:
         volumes:
             - ./shared/log/nginx:/var/logs/nginx
             - ./shared/app:/var/www/app
+        networks:
+            - frontend
+
+networks:
+    frontend:
+    backend:
