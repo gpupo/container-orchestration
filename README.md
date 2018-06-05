@@ -22,7 +22,9 @@ Put your code on ./shared/
 - Install [minikube](https://github.com/kubernetes/minikube)
 
     minikube start --vm-driver=hyperkit
+
     kubectl apply -f src/kubernetes/nginx.yaml
+
     minikube service nginx-service --url
 
 # Urls & Ports
@@ -36,4 +38,4 @@ Put your code on ./shared/
 
 ### Update Images
 
-    docker-composer build && docker push gpupo/container-orchestration
+    docker-compose build && docker push gpupo/container-orchestration
