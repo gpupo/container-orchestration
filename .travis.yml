@@ -17,6 +17,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose -v
   - docker -v
+  - sudo service mysql stop
 script:
   - docker-compose up -d
   - docker-compose ps
