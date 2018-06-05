@@ -27,6 +27,13 @@ Put your code on ./shared/
 
     minikube service nginx-service --url
 
+
+## Hello World with Ingress
+
+    minikube addons enable ingress
+
+
+
 # Urls & Ports
 
     * [Webserver](http://container-orchestration-app.localhost)

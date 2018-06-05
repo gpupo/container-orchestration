@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gpupo/containter-orchestration:nginx-latest
+        image: gpupo/container-orchestration:nginx-latest
         ports:
             - containerPort: 80
 ---
