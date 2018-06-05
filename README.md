@@ -39,8 +39,6 @@ Run
 
     eval $(minikube docker-env)
 
-    docker build -t app .
-
     printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"
 
     kubectl apply -f src/kubernetes/ingress-simple-app.yaml
