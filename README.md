@@ -26,7 +26,7 @@ Run
 
     minikube start --vm-driver=hyperkit
 
-    kubectl apply -f src/kubernetes/nginx.yaml
+    kubectl apply -f src/kubernetes/simple/nginx.yaml
 
     minikube service nginx-service --url
 
@@ -41,7 +41,7 @@ Run
 
     printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"
 
-    kubectl apply -f src/kubernetes/ingress-simple-app.yaml
+    kubectl apply -f src/kubernetes/ingress/simple-app.yaml
 
     curl http://ingress.localhost
 
@@ -51,7 +51,7 @@ Run
 
     kubectl create secret tls tls-certificate --key ssl/server.key --cert ssl/server.crt
     kubectl create secret generic tls-dhparam --from-file=ssl/dhparam.pem
-    kubectl create -f src/kubernetes/nginx-controller.yaml
+    kubectl create -f src/kubernetes/experimental/nginx-controller.yaml
 
 
 # Urls & Ports

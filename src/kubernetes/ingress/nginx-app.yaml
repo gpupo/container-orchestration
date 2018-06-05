@@ -19,6 +19,10 @@ spec:
         image: gpupo/container-orchestration:nginx-latest
         ports:
           - containerPort: 80
+     - name: php
+       image: gpupo/container-orchestration:php-latest
+       ports:
+         - containerPort: 80      
 ---
 kind: Service
 apiVersion: v1

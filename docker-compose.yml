@@ -12,11 +12,11 @@ services:
             - ./shared/log/app:/var/www/app/var/logs
         networks:
             - backend
-    nginx:
-        container_name: nginx
+    nginx-upstream:
+        container_name: nginx-upstream
         build:
-            context: ./src/images/nginx/
-        image: gpupo/container-orchestration:nginx-latest
+            context: ./src/images/nginx-upstream/
+        image: gpupo/container-orchestration:nginx-upstream-latest
         ports:
             - "80:80"
         links:
@@ -27,14 +27,16 @@ services:
         networks:
             - frontend
             - backend
+    nginx:
+        container_name: nginx
+        build:
+            context: ./src/images/nginx/
+        image: gpupo/container-orchestration:nginx-latest
     simpleHTTPServer:
         container_name: simpleHTTPServer
         build:
             context: ./src/images/simpleHTTPServer/
         image: gpupo/container-orchestration:simpleHTTPServer-latest
-        networks:
-            - frontend
-            - backend
     debian:
         container_name: debian
         build:
