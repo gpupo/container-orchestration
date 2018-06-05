@@ -16,7 +16,12 @@ Get the ``/etc/hosts`` line:
 
 Put your code on ./shared/
 
-Access http://container-orchestration-app.localhost
+
+# Urls & Ports
+
+    * [Webserver](http://container-orchestration-app.localhost)
+    * PHP-FPM port 9000
+    * [Kibana](http://container-orchestration-app.localhost:8080)
 
 
 ## Development
