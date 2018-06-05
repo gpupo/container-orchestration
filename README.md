@@ -21,6 +21,9 @@ Put your code on ./shared/
 
 - Install [minikube](https://github.com/kubernetes/minikube)
 
+
+Run
+
     minikube start --vm-driver=hyperkit
 
     kubectl apply -f src/kubernetes/nginx.yaml
@@ -30,15 +33,13 @@ Put your code on ./shared/
 
 ## Hello World with Ingress
 
-
     minikube addons enable ingress
 
     kubectl create secret tls tls-certificate --key ssl/server.key --cert ssl/server.crt
+
     kubectl create secret generic tls-dhparam --from-file=ssl/dhparam.pem
 
-
     kubectl create -f src/kubernetes/nginx-controller.yaml
-
 
 # Urls & Ports
 
