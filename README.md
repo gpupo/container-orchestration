@@ -13,7 +13,7 @@ Container-orchestration sets for automating deployment, scaling and management o
 
 Get the ``/etc/hosts`` line:
 
-    echo $(docker network inspect container-orchestration_frontend | grep Gateway | grep -o -E '[0-9\.]+') "container-orchestration-app.localhost"
+    printf "# add to /etc/hosts:\n$(docker network inspect container-orchestration_frontend | grep Gateway | grep -o -E '[0-9\.]+') container-orchestration-app.localhost"
 
 Put your code on ./shared/
 
@@ -33,19 +33,40 @@ Run
 
 ## Hello World with Ingress
 
+    minikube start --vm-driver=hyperkit;
+
     minikube addons enable ingress
 
+    eval $(minikube docker-env)
+
+    docker build -t app .
+
+    printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"
+
+    kubectl apply -f src/kubernetes/ingress-simple-app.yaml
+
+    curl http://ingress.localhost
+
+
+
+## Configure https and dh-param
+
     kubectl create secret tls tls-certificate --key ssl/server.key --cert ssl/server.crt
-
     kubectl create secret generic tls-dhparam --from-file=ssl/dhparam.pem
-
     kubectl create -f src/kubernetes/nginx-controller.yaml
+
 
 # Urls & Ports
 
 * [Webserver](http://container-orchestration-app.localhost)
 * PHP-FPM port 9000
 * [Kibana](http://container-orchestration-app.localhost:8080)
+
+
+## Rebuild
+
+    minikube stop
+    minikube delete
 
 
 ## Development

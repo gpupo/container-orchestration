@@ -27,7 +27,19 @@ services:
         networks:
             - frontend
             - backend
-
+    simpleHTTPServer:
+        container_name: simpleHTTPServer
+        build:
+            context: ./src/images/simpleHTTPServer/
+        image: gpupo/container-orchestration:simpleHTTPServer-latest
+        networks:
+            - frontend
+            - backend
+    debian:
+        container_name: debian
+        build:
+            context: ./src/images/debian/
+        image: gpupo/container-orchestration:latest
     mariadb:
         container_name: mariadb
         build:
