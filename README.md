@@ -30,15 +30,21 @@ Put your code on ./shared/
 
 ## Hello World with Ingress
 
+
     minikube addons enable ingress
 
+    kubectl create secret tls tls-certificate --key ssl/server.key --cert ssl/server.crt
+    kubectl create secret generic tls-dhparam --from-file=ssl/dhparam.pem
+
+
+    kubectl create -f src/kubernetes/nginx-controller.yaml
 
 
 # Urls & Ports
 
-    * [Webserver](http://container-orchestration-app.localhost)
-    * PHP-FPM port 9000
-    * [Kibana](http://container-orchestration-app.localhost:8080)
+* [Webserver](http://container-orchestration-app.localhost)
+* PHP-FPM port 9000
+* [Kibana](http://container-orchestration-app.localhost:8080)
 
 
 ## Development
