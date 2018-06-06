@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml --provider openshift convert -o
+      src/openshift/kompose/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: rabbitmq
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rabbitmq
+    spec:
+      containers:
+      - env:
+        - name: RABBITMQ_DEFAULT_PASS
+        - name: RABBITMQ_DEFAULT_USER
+        image: ' '
+        name: rabbitmq
+        ports:
+        - containerPort: 5672
+        - containerPort: 15672
+        - containerPort: 15671
+        resources: {}
+        securityContext:
+          privileged: true
+      restartPolicy: Always
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - rabbitmq
+      from:
+        kind: ImageStreamTag
+        name: rabbitmq:rabbitmq-latest
+    type: ImageChange
+status: {}

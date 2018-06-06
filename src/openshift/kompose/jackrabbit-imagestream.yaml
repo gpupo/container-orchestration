@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: jackrabbit
+  name: jackrabbit
+spec:
+  tags:
+  - annotations: null
+    from:
+      kind: DockerImage
+      name: gpupo/container-orchestration:jackrabbit-latest
+    generation: null
+    importPolicy: {}
+    name: jackrabbit-latest
+status:
+  dockerImageRepository: ""

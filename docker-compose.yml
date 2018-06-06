@@ -1,4 +1,15 @@
 version: '3'
+
+volumes:
+    elk-data:
+        driver: ${VOLUMES_DRIVER}
+    mariadb-data:
+        driver: ${VOLUMES_DRIVER}
+    app-data:
+        driver: ${VOLUMES_DRIVER}
+    logs-data:
+        driver: ${VOLUMES_DRIVER}
+
 services:
     php:
         container_name: php
@@ -8,8 +19,7 @@ services:
         ports:
             - "9000:9000"
         volumes:
-            - ./shared/app:/var/www/app
-            - ./shared/log/app:/var/www/app/var/logs
+            - app-data:/var/www/app
         networks:
             - backend
     nginx-upstream:
@@ -22,8 +32,8 @@ services:
         links:
             - php
         volumes:
-            - ./shared/log/nginx:/var/logs/nginx
-            - ./shared/app:/var/www/app
+            - logs-data:/var/logs/nginx
+            - app-data:/var/www/app
         networks:
             - frontend
             - backend
@@ -50,7 +60,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - ./shared/mariadb:/var/lib/mysql
+            - mariadb-data:/var/lib/mysql
         networks:
             - frontend
             - backend
@@ -68,8 +78,8 @@ services:
         ports:
             - "8080:80"
         volumes:
-            - ./shared/elk/logstash:/etc/logstash
-            - ./shared/elk/logstash/patterns:/opt/logstash/patterns
+            - elk-data:/etc/logstash
+            - elk-data:/opt/logstash/patterns
         networks:
             - frontend
             - backend

@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert -o src/kubernetes/kompose/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: nginx-upstream
+  name: nginx-upstream
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: nginx-upstream
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:nginx-upstream-latest
+        name: nginx-upstream
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/logs/nginx
+          name: logs-data
+        - mountPath: /var/www/app
+          name: app-data
+      restartPolicy: Always
+      volumes:
+      - name: logs-data
+        persistentVolumeClaim:
+          claimName: logs-data
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: app-data
+status: {}

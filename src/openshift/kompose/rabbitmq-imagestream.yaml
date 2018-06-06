@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rabbitmq
+  name: rabbitmq
+spec:
+  tags:
+  - annotations: null
+    from:
+      kind: DockerImage
+      name: gpupo/container-orchestration:rabbitmq-latest
+    generation: null
+    importPolicy: {}
+    name: rabbitmq-latest
+status:
+  dockerImageRepository: ""

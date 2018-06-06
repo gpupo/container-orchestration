@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml --provider openshift convert -o
+      src/openshift/kompose/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: elk
+  name: elk
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 80
+  selector:
+    io.kompose.service: elk
+status:
+  loadBalancer: {}

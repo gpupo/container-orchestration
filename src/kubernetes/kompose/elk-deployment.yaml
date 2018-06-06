@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert -o src/kubernetes/kompose/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: elk
+  name: elk
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: elk
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:elk-latest
+        name: elk
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/logstash
+          name: elk-data
+        - mountPath: /opt/logstash/patterns
+          name: elk-data
+      restartPolicy: Always
+      volumes:
+      - name: elk-data
+        persistentVolumeClaim:
+          claimName: elk-data
+      - name: elk-data
+        persistentVolumeClaim:
+          claimName: elk-data
+status: {}

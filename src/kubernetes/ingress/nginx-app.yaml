@@ -16,14 +16,13 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gpupo/container-orchestration:nginx-core-latest
-        #imagePullPolicy: Never
+        image: gpupo/container-orchestration:nginx-upstream-latest
         ports:
           - containerPort: 80
-      # - name: php
-      #   image: gpupo/container-orchestration:php-latest
-      #   ports:
-      #     - containerPort: 80
+      - name: php
+        image: gpupo/container-orchestration:php-latest
+        ports:
+          - containerPort: 9000
 ---
 kind: Service
 apiVersion: v1
