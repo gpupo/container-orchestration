@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert -o src/kompose/kubernetes/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: simpleHTTPServer
+  name: simpleHTTPServer
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: simpleHTTPServer
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:simpleHTTPServer-latest
+        name: simpleHTTPServer
+        resources: {}
+      restartPolicy: Always
+status: {}

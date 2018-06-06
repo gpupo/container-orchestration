@@ -1,10 +1,5 @@
 #!/bin/bash
 #see http://kompose.io/user-guide/
-mkdir -p src/kubernetes/kompose;
-rm -fv  src/kubernetes/kompose/*.yaml;
-kompose --file docker-compose.yml convert -o src/kubernetes/kompose/;
-
-
-mkdir -p src/openshift/kompose;
-rm -fv  src/openshift/kompose/*.yaml;
-kompose --file docker-compose.yml --provider openshift convert -o src/openshift/kompose/;
+rm -rfv  src/kompose/*/*.yaml;
+kompose --file docker-compose.yml convert -o src/kompose/kubernetes/;
+kompose --file docker-compose.yml --provider openshift convert -o src/kompose/openshift/;

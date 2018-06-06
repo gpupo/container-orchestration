@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert -o src/kompose/kubernetes/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: jackrabbit
+  name: jackrabbit
+spec:
+  ports:
+  - name: "8081"
+    port: 8081
+    targetPort: 8080
+  selector:
+    io.kompose.service: jackrabbit
+status:
+  loadBalancer: {}

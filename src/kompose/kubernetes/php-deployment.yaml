@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert -o src/kompose/kubernetes/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: php
+  name: php
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: php
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:php-latest
+        name: php
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/app
+          name: app-data
+      restartPolicy: Always
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: app-data
+status: {}

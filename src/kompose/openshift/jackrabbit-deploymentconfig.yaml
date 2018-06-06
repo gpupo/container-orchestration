@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml --provider openshift convert -o
+      src/kompose/openshift/
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: jackrabbit
+  name: jackrabbit
+spec:
+  replicas: 1
+  selector:
+    io.kompose.service: jackrabbit
+  strategy:
+    resources: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: jackrabbit
+    spec:
+      containers:
+      - env:
+        - name: RABBIT_URL
+          value: amqp://rabbitmq
+        image: ' '
+        name: jackrabbit
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+  test: false
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - jackrabbit
+      from:
+        kind: ImageStreamTag
+        name: jackrabbit:jackrabbit-latest
+    type: ImageChange
+status: {}
