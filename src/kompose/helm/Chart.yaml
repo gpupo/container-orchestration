@@ -1,0 +1,7 @@
+name: src/kompose/helm/
+description: A generated Helm Chart for src/kompose/helm/ from Skippbox Kompose
+version: 0.0.1
+keywords:
+  - src/kompose/helm/
+sources:
+home:

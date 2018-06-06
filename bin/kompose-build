@@ -1,5 +1,8 @@
 #!/bin/bash
 #see http://kompose.io/user-guide/
 rm -rfv  src/kompose/*/*.yaml;
-kompose --file docker-compose.yml convert -o src/kompose/kubernetes/;
+kompose --file docker-compose.yml convert -c -o src/kompose/helm/;
 kompose --file docker-compose.yml --provider openshift convert -o src/kompose/openshift/;
+
+sed -i '' '/kompose.cmd:/d' ./src/kompose/*/*.yaml
+sed -i '' '/kompose.cmd:/d' ./src/kompose/helm/templates/*.yaml

@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.version: 1.13.0 (84fa826)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: debian
+  name: debian
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: debian
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:latest
+        name: debian
+        resources: {}
+      restartPolicy: Always
+status: {}
