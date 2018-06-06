@@ -16,18 +16,19 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gpupo/container-orchestration:nginx-latest
+        image: gpupo/container-orchestration:nginx-core-latest
+        #imagePullPolicy: Never
         ports:
           - containerPort: 80
-     - name: php
-       image: gpupo/container-orchestration:php-latest
-       ports:
-         - containerPort: 80      
+      # - name: php
+      #   image: gpupo/container-orchestration:php-latest
+      #   ports:
+      #     - containerPort: 80
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx
+  name: nginx-service
 spec:
   selector:
     app: nginx
@@ -39,12 +40,12 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx
+  name: nginx-ingress
 spec:
   rules:
-  - host: ingress-nginx.localhost
+  - host: ingress.localhost
     http:
       paths:
       - backend:
-          serviceName: nginx
+          serviceName: nginx-service
           servicePort: 80

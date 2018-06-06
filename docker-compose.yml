@@ -27,11 +27,11 @@ services:
         networks:
             - frontend
             - backend
-    nginx:
-        container_name: nginx
+    nginx-core:
+        container_name: nginx-core
         build:
-            context: ./src/images/nginx/
-        image: gpupo/container-orchestration:nginx-latest
+            context: ./src/images/nginx-core/
+        image: gpupo/container-orchestration:nginx-core-latest
     simpleHTTPServer:
         container_name: simpleHTTPServer
         build:

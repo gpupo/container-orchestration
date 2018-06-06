@@ -13,7 +13,6 @@ RUN apk add --update nginx curl vim git;\
     rm -rf /var/cache/apk/* && rm -rf /tmp/*;
 
 ADD nginx.conf /etc/nginx/
-ADD app.conf /etc/nginx/conf.d/
 
 RUN adduser -D -g '' -G www-data www-data;
 
