@@ -9,7 +9,7 @@ LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration
       org.label-schema.description="Image with NGINX and Alpine" \
       org.label-schema.url="https://github.com/gpupo/container-orchestration"
 
-RUN apk add --update nginx curl vim git;\
+RUN apk add --update nginx curl vim git busybox-extras;\
     rm -rf /var/cache/apk/* && rm -rf /tmp/*;
 
 ADD nginx.conf /etc/nginx/

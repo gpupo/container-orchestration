@@ -1,0 +1,20 @@
+#/bin/bash
+
+
+# Nginx + PHP
+declare -a arr=(\
+  app-data-persistentvolumeclaim.yaml \
+  logs-data-persistentvolumeclaim.yaml \
+  nginx-upstream-deployment.yaml \
+  nginx-upstream-service.yaml \
+  php-deployment.yaml \
+  php-service.yaml\
+)
+echo "#$(date)" > build/nginx-php.yaml;
+for i in "${arr[@]}"
+do
+   cat "src/kompose/helm/templates/$i" | grep -v kompose >> build/nginx-php.yaml
+   echo '---' >> build/nginx-php.yaml;
+done
+
+cat src/kubernetes/ingress/nginx-upstream.yaml >> build/nginx-php.yaml;
