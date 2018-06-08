@@ -24,7 +24,7 @@ Put your code on ./shared/
 
 Run
 
-    minikube start --vm-driver=hyperkit
+    minikube start
 
     kubectl apply -f src/kubernetes/simple/nginx.yaml
 
@@ -33,7 +33,7 @@ Run
 
 ## Hello World with Ingress
 
-    minikube start --vm-driver=hyperkit;
+    minikube start
 
     minikube addons enable ingress
 
