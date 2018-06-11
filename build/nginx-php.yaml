@@ -1,4 +1,19 @@
 #Fri Jun  8 14:25:46 -03 2018
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: app-data
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/mnt/data"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
