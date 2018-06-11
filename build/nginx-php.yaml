@@ -2,49 +2,52 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: app-logs
+  name: pv-logs
   labels:
     type: local
 spec:
-  storageClassName: app-logs-volume
+  storageClassName: standard
   capacity:
     storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/log"
+    path: "/tmp/shared/logs"
+
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: app-data
+  name: pv-app
   labels:
     type: local
 spec:
-  storageClassName: app-data-volume
+  storageClassName: standard
   capacity:
     storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/data"
+    path: "/tmp/shared/app"
+
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: app-data
-  name: app-data
+    selector.tag: app
+  name: pvc-app
 spec:
-  storageClassName: app-data-volume
+  storageClassName: standard
   accessModes:
   - ReadWriteMany
   resources:
     requests:
       storage: 100Mi
+  volumeName: "pv-app"
 status: {}
 ---
 apiVersion: v1
@@ -52,23 +55,24 @@ kind: PersistentVolumeClaim
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: logs-data
-  name: logs-data
+    selector.tag: logs
+  name: pvc-logs
 spec:
-  storageClassName: app-logs-volume
+  storageClassName: standard
   accessModes:
   - ReadWriteMany
   resources:
     requests:
       storage: 100Mi
+  volumeName: "pv-logs"
 status: {}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    io.kompose.service: nginx-upstream
+    selector.tag: nginx-upstream
   name: nginx-upstream
 spec:
   replicas: 1
@@ -78,27 +82,28 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: nginx-upstream
+        selector.tag: nginx-upstream
+        selector.type: pod
     spec:
       containers:
       - image: gpupo/container-orchestration:nginx-upstream-latest
-        name: nginx-upstream
+        name: dp-nginx-upstream
         ports:
         - containerPort: 80
         resources: {}
         volumeMounts:
         - mountPath: /var/logs/nginx
-          name: logs-data
+          name: pv-logs
         - mountPath: /var/www/app
-          name: app-data
+          name: pv-app
       restartPolicy: Always
       volumes:
-      - name: logs-data
+      - name: pv-logs
         persistentVolumeClaim:
-          claimName: logs-data
-      - name: app-data
+          claimName: pvc-logs
+      - name: pv-app
         persistentVolumeClaim:
-          claimName: app-data
+          claimName: pvc-app
 status: {}
 ---
 apiVersion: v1
@@ -112,11 +117,11 @@ spec:
     port: 80
     targetPort: 80
   selector:
-    io.kompose.service: nginx-upstream
+    selector.tag: nginx-upstream
 status:
   loadBalancer: {}
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
@@ -129,7 +134,8 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: php
+        selector.tag: php
+        selector.type: pod
     spec:
       containers:
       - image: gpupo/container-orchestration:php-latest
@@ -139,12 +145,12 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/www/app
-          name: app-data
+          name: pv-app
       restartPolicy: Always
       volumes:
-      - name: app-data
+      - name: pv-app
         persistentVolumeClaim:
-          claimName: app-data
+          claimName: pvc-app
 status: {}
 ---
 apiVersion: v1
@@ -158,7 +164,7 @@ spec:
     port: 9000
     targetPort: 9000
   selector:
-    io.kompose.service: php
+    selector.tag: php
 status:
   loadBalancer: {}
 ---

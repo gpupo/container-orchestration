@@ -26,7 +26,7 @@ Run
 
     minikube start
 
-    kubectl apply -f src/kubernetes/simple/nginx.yaml
+    kubectl create -f src/kubernetes/simple/nginx.yaml
 
     minikube service nginx-service --url
 
@@ -41,10 +41,18 @@ Run
 
     printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"
 
-    kubectl apply -f src/kubernetes/ingress/simple-app.yaml
+    kubectl create -f src/kubernetes/ingress/simple-app.yaml
 
     curl http://ingress.localhost
 
+
+## PHP + Ingress with Ingress
+
+    minikube start --mount-string="./var:/tmp/shared";
+
+    kubectl create -f build/nginx-php.yaml
+
+    curl http://ingress.localhost
 
 
 ## Configure https and dh-param
