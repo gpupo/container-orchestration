@@ -2,17 +2,32 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
+  name: app-logs
+  labels:
+    type: local
+spec:
+  storageClassName: app-logs-volume
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/log"
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
   name: app-data
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: app-data-volume
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   hostPath:
-    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/mnt/data"
+    path: "/home/gpupo/workspace/gpupo/container-orchestration/var/data"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,8 +37,9 @@ metadata:
     io.kompose.service: app-data
   name: app-data
 spec:
+  storageClassName: app-data-volume
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 100Mi
@@ -37,8 +53,9 @@ metadata:
     io.kompose.service: logs-data
   name: logs-data
 spec:
+  storageClassName: app-logs-volume
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 100Mi
@@ -70,9 +87,9 @@ spec:
         - containerPort: 80
         resources: {}
         volumeMounts:
-        - mountPath: /var/log/nginx
+        - mountPath: /var/logs/nginx
           name: logs-data
-        - mountPath: /var/www/app
+        - mountPath: /var/www2/app
           name: app-data
       restartPolicy: Always
       volumes:
