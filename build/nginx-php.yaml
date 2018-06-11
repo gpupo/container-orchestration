@@ -8,7 +8,8 @@ metadata:
 spec:
   storageClassName: app-logs-volume
   capacity:
-    storage: 10Gi
+    storage: 1Gi
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -23,7 +24,8 @@ metadata:
 spec:
   storageClassName: app-data-volume
   capacity:
-    storage: 10Gi
+    storage: 1Gi
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -64,8 +66,6 @@ status: {}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
   labels:
     io.kompose.service: nginx-upstream
@@ -89,7 +89,7 @@ spec:
         volumeMounts:
         - mountPath: /var/logs/nginx
           name: logs-data
-        - mountPath: /var/www2/app
+        - mountPath: /var/www/app
           name: app-data
       restartPolicy: Always
       volumes:
@@ -104,15 +104,11 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
-  labels:
-    io.kompose.service: nginx-upstream
   name: nginx-upstream
 spec:
   ports:
-  - name: "80"
+  - name: "nginx"
     port: 80
     targetPort: 80
   selector:
@@ -123,11 +119,7 @@ status:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
-  labels:
-    io.kompose.service: php
   name: php
 spec:
   replicas: 1
@@ -158,15 +150,11 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.version: 1.13.0 (84fa826)
   creationTimestamp: null
-  labels:
-    io.kompose.service: php
   name: php
 spec:
   ports:
-  - name: "9000"
+  - name: "php"
     port: 9000
     targetPort: 9000
   selector:
