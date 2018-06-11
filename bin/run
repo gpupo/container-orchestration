@@ -1,0 +1,7 @@
+#!/bin/bash
+
+minikube start --mount --mount-string="./var:/tmp/shared";
+
+kubectl create -f build/nginx-php.yaml
+
+printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"

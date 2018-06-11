@@ -4,25 +4,23 @@ Container-orchestration sets for automating deployment, scaling and management o
 
 [![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration)
 
-
-## Hello World with docker-compose (slowest)
-
-    git clone https://github.com/gpupo/container-orchestration.git;
-    cd container-orchestration;
-    docker-compose up -d nginx php;
-
-Get the ``/etc/hosts`` line:
-
-    printf "# add to /etc/hosts:\n$(docker network inspect container-orchestration_frontend | grep Gateway | grep -o -E '[0-9\.]+') container-orchestration-app.localhost"
-
-Put your code on ./shared/
-
-## Hello World with minikube
+## Requirements
 
 - Install [minikube](https://github.com/kubernetes/minikube)
 
 
-Run
+## First run
+
+    git clone https://github.com/gpupo/container-orchestration.git;
+
+    cd container-orchestration;
+
+    ./bin/run
+
+
+Put your code on `./var/app/public`
+
+## Hello World with minikube
 
     minikube start
 
@@ -67,12 +65,6 @@ Run
 * [Webserver](http://container-orchestration-app.localhost)
 * PHP-FPM port 9000
 * [Kibana](http://container-orchestration-app.localhost:8080)
-
-
-## Rebuild
-
-    minikube stop
-    minikube delete
 
 
 ## Development

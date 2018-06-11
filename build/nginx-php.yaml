@@ -87,7 +87,7 @@ spec:
     spec:
       containers:
       - image: gpupo/container-orchestration:nginx-upstream-latest
-        name: dp-nginx-upstream
+        name: nginx-upstream
         ports:
         - containerPort: 80
         resources: {}
@@ -113,7 +113,7 @@ metadata:
   name: nginx-upstream
 spec:
   ports:
-  - name: "nginx"
+  - name: "http"
     port: 80
     targetPort: 80
   selector:
