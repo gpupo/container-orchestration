@@ -9,7 +9,29 @@ Container-orchestration sets for automating deployment, scaling and management o
 - Install [minikube](https://github.com/kubernetes/minikube)
 
 
-## First run
+## Use as composer dependence
+
+    composer require gpupo/container-orchestration
+
+
+Create your `.container-orcherstration.yaml` file in project root folder.
+
+Sintaxe:
+
+```yaml
+server:
+  template: nginx-php
+  domain: foo.locahost
+mount:
+  logs: var/log
+```
+
+and run
+
+    ./vendor/bin/container-orchestration
+
+
+## Use as minikube asset
 
     git clone https://github.com/gpupo/container-orchestration.git;
 
@@ -17,8 +39,8 @@ Container-orchestration sets for automating deployment, scaling and management o
 
     ./bin/start
 
-
 Put your code on `./var/app/public`
+
 
 ## Hello World with minikube
 
