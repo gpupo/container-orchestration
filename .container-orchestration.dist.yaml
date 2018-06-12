@@ -1,0 +1,8 @@
+version: 1.2
+server:
+  template: nginx-php
+  domain: ingress.locahost
+  cpus: 4
+  memory: 8192
+mount:
+  logs: var/logs

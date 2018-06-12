@@ -14,21 +14,17 @@ Container-orchestration sets for automating deployment, scaling and management o
     composer require gpupo/container-orchestration
 
 
-Create your `.container-orcherstration.yaml` file in project root folder.
+Create (and customize) a `.container-orcherstration.yaml` file in project root folder: 
 
-Sintaxe:
-
-```yaml
-server:
-  template: nginx-php
-  domain: foo.locahost
-mount:
-  logs: var/log
-```
+    cp vendor/gpupo/container-orcherstration/.container-orcherstration.dist.yaml .container-orcherstration.yaml
 
 and run
 
     ./vendor/bin/container-orchestration-start
+
+## Stop
+
+  ./vendor/bin/container-orchestration-stop
 
 
 ## Use as minikube asset

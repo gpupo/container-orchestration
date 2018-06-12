@@ -86,14 +86,14 @@ spec:
         selector.type: pod
     spec:
       containers:
-      - image: gpupo/container-orchestration:nginx-upstream-v1.1
+      - image: gpupo/container-orchestration:nginx-upstream-latest
         name: nginx-upstream
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         resources: {}
         volumeMounts:
-        - mountPath: /var/logs/nginx
+        - mountPath: /var/log/nginx
           name: pv-logs
         - mountPath: /var/www/app
           name: pv-app
@@ -139,7 +139,7 @@ spec:
         selector.type: pod
     spec:
       containers:
-      - image: gpupo/container-orchestration:php-fpm-v1.1
+      - image: gpupo/container-orchestration:php-fpm-latest
         name: php
         imagePullPolicy: IfNotPresent
         ports:

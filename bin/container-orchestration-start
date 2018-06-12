@@ -27,9 +27,10 @@ parse_yaml $COD_CONFIG > $WPLACE/config.sh
 source $WPLACE/config.sh;
 cat ${COD}/build/${config_server_template}.yaml | sed s/ingress.localhost/${config_server_domain}/ \
 | sed s~shared/logs~shared/app/${config_mount_logs}/~g \
+| sed s~latest~${config_version}~g \
 > $WPLACE/kubernetes.yaml;
 
-minikube start --mount --mount-string="${CWD}:/tmp/shared/app";
+minikube start --cpus ${config_server_cpus} --memory ${config_server_memory} --mount --mount-string="${CWD}:/tmp/shared/app";
 kubectl create -f $WPLACE/kubernetes.yaml
 
 kubectl get all
