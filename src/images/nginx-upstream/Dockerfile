@@ -1,4 +1,4 @@
-FROM gpupo/container-orchestration:nginx-core-latest
+FROM gpupo/container-orchestration:nginx-core-v1.1
 
 ADD app.conf /etc/nginx/conf.d/
 

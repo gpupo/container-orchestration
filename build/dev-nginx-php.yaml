@@ -86,7 +86,7 @@ spec:
         selector.type: pod
     spec:
       containers:
-      - image: gpupo/container-orchestration:nginx-upstream
+      - image: gpupo/container-orchestration:nginx-upstream-v1.1
         name: nginx-upstream
         imagePullPolicy: IfNotPresent
         ports:
@@ -139,7 +139,7 @@ spec:
         selector.type: pod
     spec:
       containers:
-      - image: gpupo/container-orchestration:php-fpm
+      - image: gpupo/container-orchestration:php-fpm-v1.1
         name: php
         imagePullPolicy: IfNotPresent
         ports:

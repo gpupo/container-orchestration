@@ -1,5 +1,7 @@
 #!/bin/bash
 
+minikube delete;
+
 minikube start --mount --mount-string="./var:/tmp/shared";
 
 kubectl create -f build/nginx-php.yaml
