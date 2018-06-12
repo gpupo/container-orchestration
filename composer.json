@@ -1,0 +1,25 @@
+{
+    "name": "gpupo/container-orchestration",
+    "description": "Container-orchestration sets for automating deployment, scaling and management of containerized clusters",
+    "homepage": "https://opensource.gpupo.com/container-orchestration/",
+    "authors": [
+        {
+            "name": "Gilmar Pupo",
+            "email": "contact@gpupo.com"
+        }
+    ],
+    "keywords": ["kubernetes", "container"],
+    "license": "MIT",
+    "autoload": {
+    },
+    "require": {
+    },
+    "require-dev": {
+    },
+    "bin": ["bin/container-orchestration"],
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": false
+}
