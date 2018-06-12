@@ -28,7 +28,7 @@ mount:
 
 and run
 
-    ./vendor/bin/container-orchestration
+    ./vendor/bin/container-orchestration-start
 
 
 ## Use as minikube asset

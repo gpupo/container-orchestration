@@ -16,7 +16,7 @@
     },
     "require-dev": {
     },
-    "bin": ["bin/container-orchestration"],
+    "bin": ["bin/container-orchestration-start","bin/container-orchestration-stop"],
     "config": {
         "preferred-install": "dist"
     },

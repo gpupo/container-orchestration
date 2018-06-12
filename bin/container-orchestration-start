@@ -22,6 +22,7 @@ WPLACE=$CWD/var/cache/container-orcherstration
 COD=$CWD/vendor/gpupo/container-orchestration
 COD_CONFIG=$CWD/.container-orchestration.yaml
 touch $COD_CONFIG;
+mkdir -pv $WPLACE;
 parse_yaml $COD_CONFIG > $WPLACE/config.sh
 source $WPLACE/config.sh;
 cat ${COD}/build/${config_server_template}.yaml | sed s/ingress.localhost/${config_server_domain}/ \
@@ -30,5 +31,8 @@ cat ${COD}/build/${config_server_template}.yaml | sed s/ingress.localhost/${conf
 
 minikube start --mount --mount-string="${CWD}:/tmp/shared/app";
 kubectl create -f $WPLACE/kubernetes.yaml
+
+kubectl get all
+
 
 printf "# add to /etc/hosts:\n$(minikube ip) ${config_server_domain}\n\n"
