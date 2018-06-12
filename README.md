@@ -15,7 +15,7 @@ Container-orchestration sets for automating deployment, scaling and management o
 
     cd container-orchestration;
 
-    ./bin/run
+    ./bin/start
 
 
 Put your code on `./var/app/public`

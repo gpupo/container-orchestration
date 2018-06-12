@@ -15,7 +15,7 @@ services:
         container_name: php
         build:
             context: ./src/images/php-fpm/
-        image: gpupo/container-orchestration:php-latest
+        image: gpupo/container-orchestration:php-fpm
         ports:
             - "9000:9000"
         volumes:
@@ -26,13 +26,15 @@ services:
         container_name: nginx-core
         build:
             context: ./src/images/nginx-core/
-        image: gpupo/container-orchestration:nginx-core-latest
-                
+        image: gpupo/container-orchestration:nginx-core
+
     nginx-upstream:
         container_name: nginx-upstream
         build:
             context: ./src/images/nginx-upstream/
-        image: gpupo/container-orchestration:nginx-upstream-latest
+        image: gpupo/container-orchestration:nginx-upstream
+        depends_on:
+          - nginx-core
         ports:
             - "80:80"
         links:

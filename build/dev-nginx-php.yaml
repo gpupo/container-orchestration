@@ -1,0 +1,184 @@
+#Fri Jun  8 14:25:46 -03 2018
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-logs
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/tmp/shared/logs"
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-app
+  labels:
+    type: local
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/tmp/shared/app"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    selector.tag: app
+  name: pvc-app
+spec:
+  storageClassName: standard
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  volumeName: "pv-app"
+status: {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    selector.tag: logs
+  name: pvc-logs
+spec:
+  storageClassName: standard
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  volumeName: "pv-logs"
+status: {}
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    selector.tag: nginx-upstream
+  name: nginx-upstream
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        selector.tag: nginx-upstream
+        selector.type: pod
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:nginx-upstream
+        name: nginx-upstream
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/logs/nginx
+          name: pv-logs
+        - mountPath: /var/www/app
+          name: pv-app
+      restartPolicy: Always
+      volumes:
+      - name: pv-logs
+        persistentVolumeClaim:
+          claimName: pvc-logs
+      - name: pv-app
+        persistentVolumeClaim:
+          claimName: pvc-app
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: nginx-upstream
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: 80
+  selector:
+    selector.tag: nginx-upstream
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: php
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        selector.tag: php
+        selector.type: pod
+    spec:
+      containers:
+      - image: gpupo/container-orchestration:php-fpm
+        name: php
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/app
+          name: pv-app
+      restartPolicy: Always
+      volumes:
+      - name: pv-app
+        persistentVolumeClaim:
+          claimName: pvc-app
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: php
+spec:
+  ports:
+  - name: "php"
+    port: 9000
+    targetPort: 9000
+  selector:
+    selector.tag: php
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+spec:
+  rules:
+  - host: ingress.localhost
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-upstream
+          servicePort: 80
