@@ -12,7 +12,7 @@ function parse_yaml {
       for (i in vname) {if (i > indent) {delete vname[i]}}
       if (length($3) > 0) {
          vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'config_$prefix'",vn, $2, $3);
+         printf("export %s%s%s=\"%s\"\n", "'config_$prefix'",vn, $2, $3);
       }
    }'
 }
@@ -25,15 +25,17 @@ touch $COD_CONFIG;
 mkdir -pv $WPLACE;
 parse_yaml $COD_CONFIG > $WPLACE/config.sh
 source $WPLACE/config.sh;
-cat ${COD}/build/${config_server_template}.yaml | sed s/ingress.localhost/${config_server_domain}/ \
+cat ${COD}/build/${config_server_template}.yaml | sed s/config_server_domain/${config_server_domain}/ \
 | sed s~shared/logs~shared/app/${config_mount_logs}/~g \
+| sed s~config_server_namespace~${config_server_namespace}~g \
 | sed s~latest~${config_version}~g \
 > $WPLACE/kubernetes.yaml;
 
+printf "\n $WPLACE/kubernetes.yaml file builded...\n\n";
 minikube start --cpus ${config_server_cpus} --memory ${config_server_memory} --mount --mount-string="${CWD}:/tmp/shared/app";
+#minikube mount $PRD:/tmp/shared/app --9p-version=9p2000.L &
+
 kubectl create -f $WPLACE/kubernetes.yaml
-
-kubectl get all
-
-
 printf "# add to /etc/hosts:\n$(minikube ip) ${config_server_domain}\n\n"
+
+kubectl config set-context $(kubectl config current-context) --namespace=${config_server_namespace}

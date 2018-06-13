@@ -32,7 +32,7 @@ services:
         container_name: nginx-upstream
         build:
             context: ./src/images/nginx-upstream/
-        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}b
         depends_on:
           - nginx-core
         ports:
@@ -46,76 +46,76 @@ services:
             - frontend
             - backend
 
-    simpleHTTPServer:
-        container_name: simpleHTTPServer
-        build:
-            context: ./src/images/simpleHTTPServer/
-        image: gpupo/container-orchestration:simpleHTTPServer-latest
-    debian:
-        container_name: debian
-        build:
-            context: ./src/images/debian/
-        image: gpupo/container-orchestration:debian-latest
-    mariadb:
-        container_name: mariadb
-        build:
-            context: ./src/images/mariadb/
-        image: gpupo/container-orchestration:mariadb-${CO_VERSION}
-        ports:
-            - "3306:3306"
-        volumes:
-            - mariadb-data:/var/lib/mysql
-        networks:
-            - frontend
-            - backend
-        environment:
-            - MYSQL_DATABASE=${MARIADB_DATABASE}
-            - MYSQL_USER=${MARIADB_USER}
-            - MYSQL_PASSWORD=${MARIADB_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-
-    elk:
-        container_name: elk
-        build:
-            context: ./src/images/elk/
-        image: gpupo/container-orchestration:elk-${CO_VERSION}
-        ports:
-            - "8080:80"
-        volumes:
-            - elk-data:/etc/logstash
-            - elk-data:/opt/logstash/patterns
-        networks:
-            - frontend
-            - backend
-    jackrabbit:
-        container_name: jackrabbit
-        build:
-            context: ./src/images/jackrabbit/
-        image: gpupo/container-orchestration:jackrabbit-${CO_VERSION}
-        ports:
-            - "8081:8080"
-        links:
-            - rabbitmq
-        environment:
-            RABBIT_URL: 'amqp://rabbitmq'
-
-    rabbitmq:
-        container_name: rabbitmq
-        build:
-            context: ./src/images/rabbitmq/
-        image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
-        ports:
-            - "5672:5672"
-            - "15672:15672"
-            - "15671:15671"
-        privileged: true
-        environment:
-            - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-            - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-        depends_on:
-            - php
-        networks:
-            - backend
+    # simpleHTTPServer:
+    #     container_name: simpleHTTPServer
+    #     build:
+    #         context: ./src/images/simpleHTTPServer/
+    #     image: gpupo/container-orchestration:simpleHTTPServer-latest
+    # debian:
+    #     container_name: debian
+    #     build:
+    #         context: ./src/images/debian/
+    #     image: gpupo/container-orchestration:debian-latest
+    # mariadb:
+    #     container_name: mariadb
+    #     build:
+    #         context: ./src/images/mariadb/
+    #     image: gpupo/container-orchestration:mariadb-${CO_VERSION}
+    #     ports:
+    #         - "3306:3306"
+    #     volumes:
+    #         - mariadb-data:/var/lib/mysql
+    #     networks:
+    #         - frontend
+    #         - backend
+    #     environment:
+    #         - MYSQL_DATABASE=${MARIADB_DATABASE}
+    #         - MYSQL_USER=${MARIADB_USER}
+    #         - MYSQL_PASSWORD=${MARIADB_PASSWORD}
+    #         - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+    #
+    # elk:
+    #     container_name: elk
+    #     build:
+    #         context: ./src/images/elk/
+    #     image: gpupo/container-orchestration:elk-${CO_VERSION}
+    #     ports:
+    #         - "8080:80"
+    #     volumes:
+    #         - elk-data:/etc/logstash
+    #         - elk-data:/opt/logstash/patterns
+    #     networks:
+    #         - frontend
+    #         - backend
+    # jackrabbit:
+    #     container_name: jackrabbit
+    #     build:
+    #         context: ./src/images/jackrabbit/
+    #     image: gpupo/container-orchestration:jackrabbit-${CO_VERSION}
+    #     ports:
+    #         - "8081:8080"
+    #     links:
+    #         - rabbitmq
+    #     environment:
+    #         RABBIT_URL: 'amqp://rabbitmq'
+    #
+    # rabbitmq:
+    #     container_name: rabbitmq
+    #     build:
+    #         context: ./src/images/rabbitmq/
+    #     image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
+    #     ports:
+    #         - "5672:5672"
+    #         - "15672:15672"
+    #         - "15671:15671"
+    #     privileged: true
+    #     environment:
+    #         - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+    #         - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    #     depends_on:
+    #         - php
+    #     networks:
+    #         - backend
 
 networks:
     frontend:

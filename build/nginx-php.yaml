@@ -1,8 +1,16 @@
 #Fri Jun  8 14:25:46 -03 2018
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: config_server_namespace
+  labels:
+    name: config_server_namespace
+---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: pv-logs
+  namespace: config_server_namespace
   labels:
     type: local
 spec:
@@ -20,6 +28,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: pv-app
+  namespace: config_server_namespace
   labels:
     type: local
 spec:
@@ -40,6 +49,7 @@ metadata:
   labels:
     selector.tag: app
   name: pvc-app
+  namespace: config_server_namespace
 spec:
   storageClassName: standard
   accessModes:
@@ -57,6 +67,7 @@ metadata:
   labels:
     selector.tag: logs
   name: pvc-logs
+  namespace: config_server_namespace
 spec:
   storageClassName: standard
   accessModes:
@@ -74,6 +85,7 @@ metadata:
   labels:
     selector.tag: nginx-upstream
   name: nginx-upstream
+  namespace: config_server_namespace
 spec:
   replicas: 1
   strategy:
@@ -89,6 +101,7 @@ spec:
       - image: gpupo/container-orchestration:nginx-upstream-latest
         name: nginx-upstream
         imagePullPolicy: IfNotPresent
+        #command: [ "/bin/nginxSetUpstream" , "php.config_server_namespace"]
         ports:
         - containerPort: 80
         resources: {}
@@ -112,6 +125,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: nginx-upstream
+  namespace: config_server_namespace
 spec:
   ports:
   - name: "http"
@@ -127,6 +141,7 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   name: php
+  namespace: config_server_namespace
 spec:
   replicas: 1
   strategy:
@@ -138,9 +153,13 @@ spec:
         selector.tag: php
         selector.type: pod
     spec:
+      securityContext:
+        runAsUser: 1001
       containers:
       - image: gpupo/container-orchestration:php-fpm-latest
         name: php
+        securityContext:
+          runAsUser: 1001
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9000
@@ -160,6 +179,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   name: php
+  namespace: config_server_namespace
 spec:
   ports:
   - name: "php"
@@ -173,10 +193,11 @@ status:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: ingress.config_server_namespace
+  namespace: config_server_namespace
 spec:
   rules:
-  - host: ingress.localhost
+  - host: config_server_domain
     http:
       paths:
       - backend:

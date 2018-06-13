@@ -1,0 +1,3 @@
+#/bin/sh
+
+echo "upstream php-upstream { server $1:9000; }" > /etc/nginx/conf.d/upstream.conf;

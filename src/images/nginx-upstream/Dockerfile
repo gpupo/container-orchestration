@@ -1,5 +1,6 @@
 FROM gpupo/container-orchestration:nginx-core-v1.1
 
 COPY default.conf /etc/nginx/conf.d/
+COPY nginxSetUpstream /bin/nginxSetUpstream
 
-RUN echo "upstream php-upstream { server php.default:9000; }" > /etc/nginx/conf.d/upstream.conf;
+RUN /bin/nginxSetUpstream php;
