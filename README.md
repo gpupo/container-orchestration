@@ -14,7 +14,7 @@ Container-orchestration sets for automating deployment, scaling and management o
     composer require gpupo/container-orchestration
 
 
-Create (and customize) a `.container-orcherstration.yaml` file in project root folder: 
+Create (and customize) a `.container-orcherstration.yaml` file in project root folder:
 
     cp vendor/gpupo/container-orcherstration/.container-orcherstration.dist.yaml .container-orcherstration.yaml
 
@@ -26,6 +26,30 @@ and run
 
   ./vendor/bin/container-orchestration-stop
 
+
+### Symfony complements
+
+Set the `cache` and `logs` directories to `/tmp` on `src/Kernel.php` file:
+
+```php
+//
+//...
+class Kernel extends BaseKernel
+{
+    //...
+    public function getCacheDir()
+    {
+        return '/tmp/app-cache-'.$this->environment;
+    }
+
+    public function getLogDir()
+    {
+        return '/tmp/app-log';
+    }
+
+//...
+
+```
 
 ## Use as minikube asset
 

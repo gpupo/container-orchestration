@@ -9,24 +9,6 @@ metadata:
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: pv-logs
-  namespace: config_server_namespace
-  labels:
-    type: local
-spec:
-  storageClassName: standard
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/tmp/shared/logs"
-
----
-kind: PersistentVolume
-apiVersion: v1
-metadata:
   name: pv-app
   namespace: config_server_namespace
   labels:
@@ -48,6 +30,7 @@ metadata:
   creationTimestamp: null
   labels:
     selector.tag: app
+    selector.co_version: config_version
   name: pvc-app
   namespace: config_server_namespace
 spec:
@@ -60,30 +43,13 @@ spec:
   volumeName: "pv-app"
 status: {}
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  creationTimestamp: null
-  labels:
-    selector.tag: logs
-  name: pvc-logs
-  namespace: config_server_namespace
-spec:
-  storageClassName: standard
-  accessModes:
-  - ReadWriteMany
-  resources:
-    requests:
-      storage: 100Mi
-  volumeName: "pv-logs"
-status: {}
----
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
     selector.tag: nginx-upstream
+    selector.co_version: config_version
   name: nginx-upstream
   namespace: config_server_namespace
 spec:
@@ -96,25 +62,23 @@ spec:
       labels:
         selector.tag: nginx-upstream
         selector.type: pod
+        selector.co_version: config_version
     spec:
       containers:
-      - image: gpupo/container-orchestration:nginx-upstream-latest
+      - image: gpupo/container-orchestration:nginx-upstream-config_version
         name: nginx-upstream
-        imagePullPolicy: IfNotPresent
-        #command: [ "/bin/nginxSetUpstream" , "php.config_server_namespace"]
+        imagePullPolicy: Never
+        env:
+          - name: PHP_SERVER
+            value: "php.config_server_namespace"
         ports:
         - containerPort: 80
         resources: {}
         volumeMounts:
-        - mountPath: /var/log/nginx
-          name: pv-logs
         - mountPath: /var/www/app
           name: pv-app
       restartPolicy: Always
       volumes:
-      - name: pv-logs
-        persistentVolumeClaim:
-          claimName: pvc-logs
       - name: pv-app
         persistentVolumeClaim:
           claimName: pvc-app
@@ -152,14 +116,15 @@ spec:
       labels:
         selector.tag: php
         selector.type: pod
+        selector.co_version: config_version
     spec:
-      securityContext:
-        runAsUser: 1001
+      #securityContext:
+      #  runAsUser: 1001
       containers:
-      - image: gpupo/container-orchestration:php-fpm-latest
+      - image: gpupo/container-orchestration:php-fpm-config_version
         name: php
-        securityContext:
-          runAsUser: 1001
+        #securityContext:
+        #  runAsUser: 1001
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9000

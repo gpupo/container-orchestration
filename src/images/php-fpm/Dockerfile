@@ -19,10 +19,12 @@ RUN apt-get -q update; apt-get install -y --no-install-recommends apt-utils iput
 
 RUN docker-php-ext-install gd opcache ctype json mbstring; \
   usermod --shell /bin/bash www-data; \
-  usermod --home /var/www/app www-data; \
   useradd -u 1001 -M docker; \
   usermod -a -G docker www-data; \
-  usermod -a -G www-data docker;
+  usermod -a -G www-data docker; \
+  useradd -u 1000 -M rkt; \
+  usermod -a -G rkt www-data; \
+  usermod -a -G www-data rkt;
 
 WORKDIR /var/www/app
 

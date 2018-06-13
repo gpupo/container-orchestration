@@ -1,6 +1,6 @@
 FROM gpupo/container-orchestration:nginx-core-v1.1
 
 COPY default.conf /etc/nginx/conf.d/
-COPY nginxSetUpstream /bin/nginxSetUpstream
+COPY nginxUpstream /bin/nginxUpstream
 
-RUN /bin/nginxSetUpstream php;
+CMD ["sh", "-c", "nginxUpstream; nginx"]

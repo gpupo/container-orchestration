@@ -25,17 +25,21 @@ touch $COD_CONFIG;
 mkdir -pv $WPLACE;
 parse_yaml $COD_CONFIG > $WPLACE/config.sh
 source $WPLACE/config.sh;
-cat ${COD}/build/${config_server_template}.yaml | sed s/config_server_domain/${config_server_domain}/ \
-| sed s~shared/logs~shared/app/${config_mount_logs}/~g \
+cat ${COD}/build/${config_server_template}.yaml \
+| sed s/config_server_domain/${config_server_domain}/ \
 | sed s~config_server_namespace~${config_server_namespace}~g \
-| sed s~latest~${config_version}~g \
+| sed s~config_version~${config_version}~g \
 > $WPLACE/kubernetes.yaml;
 
 printf "\n $WPLACE/kubernetes.yaml file builded...\n\n";
+
 minikube start --cpus ${config_server_cpus} --memory ${config_server_memory} --mount --mount-string="${CWD}:/tmp/shared/app";
-#minikube mount $PRD:/tmp/shared/app --9p-version=9p2000.L &
+
+# If you can try mount with docker:docker owner
+# minikube mount $PRD:/tmp/shared/app --9p-version=9p2000.L &
 
 kubectl create -f $WPLACE/kubernetes.yaml
 printf "# add to /etc/hosts:\n$(minikube ip) ${config_server_domain}\n\n"
 
+#Change namespace:
 kubectl config set-context $(kubectl config current-context) --namespace=${config_server_namespace}

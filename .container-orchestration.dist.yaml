@@ -1,8 +1,7 @@
-version: v1.2
+version: v1.4
 server:
+  namespace: foo-example-com
   template: nginx-php
-  domain: ingress.locahost
+  domain: foo.example.com
   cpus: 4
   memory: 8192
-mount:
-  logs: var/logs

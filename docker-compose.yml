@@ -32,7 +32,7 @@ services:
         container_name: nginx-upstream
         build:
             context: ./src/images/nginx-upstream/
-        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}b
+        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
         depends_on:
           - nginx-core
         ports:
