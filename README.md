@@ -18,13 +18,13 @@ Create (and customize) a `.container-orcherstration.yaml` file in project root f
 
     cp vendor/gpupo/container-orcherstration/.container-orcherstration.dist.yaml .container-orcherstration.yaml
 
-and run
+### Start
 
     ./vendor/bin/container-orchestration-start
 
-## Stop
+### Stop
 
-  ./vendor/bin/container-orchestration-stop
+    ./vendor/bin/container-orchestration-stop
 
 
 ### Symfony complements
@@ -50,6 +50,48 @@ class Kernel extends BaseKernel
 //...
 
 ```
+
+## Use images only with Docker
+
+
+To run  `Symfony 4`, create th `docker-compose.yaml` file with content:
+
+```YAML
+
+version: '2'
+services:
+    php:
+        container_name: php
+        image: gpupo/container-orchestration:php-fpm-latest
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./:/var/www/app
+        networks:
+            - backend
+    nginx-upstream:
+        container_name: nginx-upstream
+        image: gpupo/container-orchestration:nginx-upstream-latest
+        ports:
+            - "80:80"
+        links:
+            - php
+        volumes:
+            - ./:/var/www/app
+        networks:
+            - frontend
+            - backend
+networks:
+    frontend:
+    backend:
+```
+
+and run
+
+    docker-compose up -d
+
+
+
 
 ## Use as minikube asset
 

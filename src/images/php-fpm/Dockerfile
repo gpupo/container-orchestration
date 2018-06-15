@@ -26,6 +26,8 @@ RUN docker-php-ext-install gd opcache ctype json mbstring; \
   usermod -a -G rkt www-data; \
   usermod -a -G www-data rkt;
 
+COPY php.ini /usr/local/etc/php/
+
 WORKDIR /var/www/app
 
 EXPOSE 9000
