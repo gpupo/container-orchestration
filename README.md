@@ -91,6 +91,11 @@ and run
     docker-compose up -d
 
 
+or simple run:
+
+
+  docker run  -v ./:/var/www/app gpupo/container-orchestration:php-dev-v1.4.2 /root/.composer/vendor/bin/php-cs-fixer fix
+
 
 
 ## Use as minikube asset

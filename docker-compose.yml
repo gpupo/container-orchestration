@@ -22,6 +22,11 @@ services:
             - app-data:/var/www/app
         networks:
             - backend
+    php-dev:
+        container_name: php-dev
+        build:
+            context: ./src/images/php-dev/
+        image: gpupo/container-orchestration:php-dev-${CO_VERSION}
     nginx-core:
         container_name: nginx-core
         build:
