@@ -1,0 +1,41 @@
+version: '2'
+services:
+  mariadb:
+    image: mariadb
+    volumes:
+      - ./var/data/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mas7er
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress_db
+    networks:
+        - backend
+  wordpress:
+    links:
+      - mariadb
+    image: gpupo/container-orchestration:wordpress-v1.4.2
+    volumes:
+      - ./var/wordpress/:/var/www/html/
+    restart: always
+    networks:
+        - backend
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress_db
+      FS_METHOD: "direct"
+  nginx-upstream:
+      container_name: nginx-upstream
+      image: gpupo/container-orchestration:nginx-upstream-v1.5
+      ports:
+          - "80:80"
+      wordpress:
+          - php
+      volumes:
+        - ./var/wordpress/:/var/www/app
+      networks:
+          - frontend
+          - backend
