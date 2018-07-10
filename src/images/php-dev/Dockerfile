@@ -10,4 +10,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.profile
 
 RUN mkdir -p /usr/local/bin/;   mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
-RUN /usr/local/bin/composer global require friendsofphp/php-cs-fixer;
+RUN /usr/local/bin/composer global require friendsofphp/php-cs-fixer; \
+    /usr/local/bin/composer global require "squizlabs/php_codesniffer=*"; \
+    /usr/local/bin/composer global require escapestudios/symfony2-coding-standard:3.x-dev; \
+    /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard
