@@ -1,4 +1,4 @@
-FROM gpupo/container-orchestration:php-fpm-v1.4.2
+FROM gpupo/container-orchestration:php-fpm-v1.4.5
 
 RUN  pecl install xdebug-2.6.0 \
     && docker-php-ext-enable xdebug;

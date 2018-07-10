@@ -27,6 +27,11 @@ services:
         build:
             context: ./src/images/php-dev/
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
+    php-wordpress:
+        container_name: php-wordpress
+        build:
+            context: ./src/images/php-wordpress/
+        image: gpupo/container-orchestration:php-wordpress-${CO_VERSION}
     nginx-core:
         container_name: nginx-core
         build:
