@@ -27,6 +27,7 @@ RUN docker-php-ext-install gd  mysqli opcache ctype json mbstring; \
   usermod -a -G www-data rkt;
 
 COPY php.ini /usr/local/etc/php/
+COPY opcache-recommended.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 WORKDIR /var/www/app
 
