@@ -1,9 +1,9 @@
 #/bin/bash
 
 #Delete namespace local images
-docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
+#docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
 # Update images
-docker images | grep -v "REPOSITORY\|none" | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker pull
+#docker images | grep -v "REPOSITORY\|none" | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker pull
 
 docker-compose build
 docker push gpupo/container-orchestration
