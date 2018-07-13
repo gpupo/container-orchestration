@@ -1,4 +1,5 @@
-FROM gpupo/container-orchestration:nginx-core-v1.1
+ARG CO_VERSION
+FROM gpupo/container-orchestration:nginx-core-${CO_VERSION}
 
 COPY default.conf /etc/nginx/conf.d/
 COPY nginxUpstream /bin/nginxUpstream

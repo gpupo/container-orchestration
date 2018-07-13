@@ -26,6 +26,8 @@ services:
         container_name: php-dev
         build:
             context: ./src/images/php-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
 
     nginx-core:
@@ -38,6 +40,9 @@ services:
         container_name: nginx-upstream
         build:
             context: ./src/images/nginx-upstream/
+            args:
+              CO_VERSION: ${CO_VERSION}
+
         image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
         depends_on:
           - nginx-core
