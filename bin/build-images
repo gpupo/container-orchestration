@@ -6,4 +6,4 @@
 #docker images | grep -v "REPOSITORY\|none" | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker pull
 
 docker-compose build
-docker push gpupo/container-orchestration
+#docker push gpupo/container-orchestration

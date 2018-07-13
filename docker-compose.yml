@@ -42,7 +42,6 @@ services:
             context: ./src/images/nginx-upstream/
             args:
               CO_VERSION: ${CO_VERSION}
-
         image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
         depends_on:
           - nginx-core
@@ -56,6 +55,15 @@ services:
         networks:
             - frontend
             - backend
+
+    nginx-wordpress:
+        container_name: nginx-wordpress
+        build:
+            context: ./src/images/nginx-wordpress/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-wordpress-${CO_VERSION}
+
 
     simpleHTTPServer:
         container_name: simpleHTTPServer
