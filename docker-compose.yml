@@ -1,8 +1,6 @@
 version: '3'
 
 volumes:
-    elk-data:
-        driver: ${VOLUMES_DRIVER}
     mariadb-data:
         driver: ${VOLUMES_DRIVER}
     app-data:
@@ -73,6 +71,8 @@ services:
         container_name: simpleHTTPServer
         build:
             context: ./src/images/simpleHTTPServer/
+            args:
+              CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:simpleHTTPServer-${CO_VERSION}
     # debian:
     #     container_name: debian
@@ -97,21 +97,22 @@ services:
     #         - MYSQL_PASSWORD=${MARIADB_PASSWORD}
     #         - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     #
-    elk:
-        container_name: elk
+    logstash:
+        container_name: logstash
         build:
-            context: ./src/images/elk/
+            context: ./src/images/logstash/
             args:
               CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:elk-${CO_VERSION}
-        # ports:
-        #     - "8080:80"
-        # volumes:
-        #     - elk-data:/etc/logstash
-        #     - elk-data:/opt/logstash/patterns
-        # networks:
-        #     - frontend
-        #     - backend
+        image: gpupo/container-orchestration:logstash-${CO_VERSION}
+
+    kibana:
+        container_name: kibana
+        build:
+            context: ./src/images/kibana/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:kibana-${CO_VERSION}
+
     # jackrabbit:
     #     container_name: jackrabbit
     #     build:
@@ -124,12 +125,14 @@ services:
     #     environment:
     #         RABBIT_URL: 'amqp://rabbitmq'
     #
-    # rabbitmq:
-    #     container_name: rabbitmq
-    #     build:
-    #         context: ./src/images/rabbitmq/
-    #     image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
-    #     ports:
+    rabbitmq:
+        container_name: rabbitmq
+        build:
+            context: ./src/images/rabbitmq/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
+        # ports:
     #         - "5672:5672"
     #         - "15672:15672"
     #         - "15671:15671"

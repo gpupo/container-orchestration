@@ -18,38 +18,6 @@ Create (and customize) a `.container-orcherstration.yaml` file in project root f
 
     cp vendor/gpupo/container-orcherstration/.container-orcherstration.dist.yaml .container-orcherstration.yaml
 
-### Start
-
-    ./vendor/bin/container-orchestration-start
-
-### Stop
-
-    ./vendor/bin/container-orchestration-stop
-
-
-### Symfony complements
-
-Set the `cache` and `logs` directories to `/tmp` on `src/Kernel.php` file:
-
-```php
-//
-//...
-class Kernel extends BaseKernel
-{
-    //...
-    public function getCacheDir()
-    {
-        return '/tmp/app-cache-'.$this->environment;
-    }
-
-    public function getLogDir()
-    {
-        return '/tmp/app-log';
-    }
-
-//...
-
-```
 
 ## Use images only with Docker
 
@@ -63,8 +31,6 @@ services:
     php:
         container_name: php
         image: gpupo/container-orchestration:php-fpm-latest
-        ports:
-            - "9000:9000"
         volumes:
             - ./:/var/www/app
         networks:
@@ -94,7 +60,7 @@ and run
 or simple run:
 
 
-  docker run  -v ./:/var/www/app gpupo/container-orchestration:php-dev-v1.4.2 /root/.composer/vendor/bin/php-cs-fixer fix
+  docker run -d gpupo/container-orchestration:php-dev-v1.4.8
 
 
 
@@ -149,15 +115,8 @@ Put your code on `./var/app/public`
     kubectl create -f src/kubernetes/experimental/nginx-controller.yaml
 
 
-# Urls & Ports
-
-* [Webserver](http://container-orchestration-app.localhost)
-* PHP-FPM port 9000
-* [Kibana](http://container-orchestration-app.localhost:8080)
-
-
 ## Development
 
 ### Update Images
 
-    docker-compose build && docker push gpupo/container-orchestration
+    bin/build-images
