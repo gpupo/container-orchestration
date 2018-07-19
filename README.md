@@ -117,6 +117,18 @@ Put your code on `./var/app/public`
 
 ## Development
 
-### Update Images
+1) Clone this project;
+2) Fork https://github.com/gpupo/container-orchestration;
+3) Add your fork url as Remote in your local repository;
+4) Create a fetature branch
+5) Edit and build images;
+6) Push new codes into your remote branch;
+7) Create a Pull Request
 
-    bin/build-images
+### Build Images
+
+    docker-compose build
+
+### Upload to Docker Hub (if you have permission!)
+
+	docker push gpupo/container-orchestration
