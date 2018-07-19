@@ -37,6 +37,14 @@ services:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nodejs-dev-${CO_VERSION}
 
+    python-dev:
+        container_name: python
+        build:
+            context: ./src/images/python-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:python-dev-${CO_VERSION}
+
     nginx-core:
         container_name: nginx-core
         build:

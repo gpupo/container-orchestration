@@ -21,6 +21,16 @@ Create (and customize) a `.container-orcherstration.yaml` file in project root f
 
 ## Use images only with Docker
 
+Python
+
+    docker run -v "$PWD":/var/www/app -it--entrypoint /bin/bash gpupo/container-orchestration:python-dev-v1.4.11
+
+Node
+
+	docker run -v "$PWD":/usr/src/app -it--entrypoint /bin/bash gpupo/container-orchestration:nodejs-dev-v1.4.11
+
+
+
 
 To run  `Symfony 4`, create th `docker-compose.yaml` file with content:
 
