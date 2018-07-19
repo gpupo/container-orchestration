@@ -1,4 +1,5 @@
 FROM php:fpm
+ARG CO_VERSION
 # see https://hub.docker.com/_/php/
 LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
       org.label-schema.schema-version="${CO_VERSION}" \

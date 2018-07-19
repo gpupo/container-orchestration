@@ -29,6 +29,13 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
+    nodejs-dev:
+        container_name: nodejs-dev
+        build:
+            context: ./src/images/nodejs-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nodejs-dev-${CO_VERSION}
 
     nginx-core:
         container_name: nginx-core
