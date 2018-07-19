@@ -9,31 +9,17 @@ Container-orchestration sets for automating deployment, scaling and management o
 - Install [minikube](https://github.com/kubernetes/minikube)
 
 
-## Use as composer dependence
-
-    composer require gpupo/container-orchestration
-
-
-Create (and customize) a `.container-orcherstration.yaml` file in project root folder:
-
-    cp vendor/gpupo/container-orcherstration/.container-orcherstration.dist.yaml .container-orcherstration.yaml
-
-
 ## Use images only with Docker
 
 Python
 
     docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-
 	gpupo/container-orchestration:python-dev-v1.4.11;
 
 Node
 
 	docker run -v "$PWD":/usr/src/app -it --entrypoint /bin/bash \
-
 	gpupo/container-orchestration:nodejs-dev-v1.4.11
-
-
 
 
 To run  `Symfony 4`, create th `docker-compose.yaml` file with content:
@@ -44,14 +30,14 @@ version: '2'
 services:
     php:
         container_name: php
-        image: gpupo/container-orchestration:php-fpm-latest
+        image: gpupo/container-orchestration:php-fpm-v1.4.11
         volumes:
             - ./:/var/www/app
         networks:
             - backend
     nginx-upstream:
         container_name: nginx-upstream
-        image: gpupo/container-orchestration:nginx-upstream-latest
+        image: gpupo/container-orchestration:nginx-upstream-v1.4.11
         ports:
             - "80:80"
         links:
@@ -74,7 +60,7 @@ and run
 or simple run:
 
 
-  docker run -d gpupo/container-orchestration:php-dev-v1.4.8
+  docker run -d gpupo/container-orchestration:php-dev-v1.4.11
 
 
 
