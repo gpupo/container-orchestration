@@ -5,20 +5,25 @@ Container-orchestration sets for automating deployment, scaling and management o
 [![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration)
 
 ## Requirements
-
-- Install [minikube](https://github.com/kubernetes/minikube)
+- Docker
+- [Minikube](https://github.com/kubernetes/minikube) (if run Kubrnetes)
 
 
 ## Use images only with Docker
 
 Python
 
-    docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
+    docker run -v "$PWD":/usr/src/app -it --entrypoint /bin/bash \
 	gpupo/container-orchestration:python-dev-v1.4.11;
+
+PHP
+
+	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
+	gpupo/container-orchestration:php-dev-v1.4.11
 
 Node
 
-	docker run -v "$PWD":/usr/src/app -it --entrypoint /bin/bash \
+	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
 	gpupo/container-orchestration:nodejs-dev-v1.4.11
 
 
@@ -60,16 +65,13 @@ and run
 or simple run:
 
 
-  docker run -d gpupo/container-orchestration:php-dev-v1.4.11
-
+  	docker run -d gpupo/container-orchestration:php-dev-v1.4.11
 
 
 ## Use as minikube asset
 
     git clone https://github.com/gpupo/container-orchestration.git;
-
     cd container-orchestration;
-
     ./bin/start
 
 Put your code on `./var/app/public`
@@ -78,33 +80,24 @@ Put your code on `./var/app/public`
 ## Hello World with minikube
 
     minikube start
-
     kubectl create -f src/kubernetes/simple/nginx.yaml
-
     minikube service nginx-service --url
 
 
 ## Hello World with Ingress
 
     minikube start
-
     minikube addons enable ingress
-
     eval $(minikube docker-env)
-
     printf "# add to /etc/hosts:\n$(minikube ip) ingress.localhost\n"
-
     kubectl create -f src/kubernetes/ingress/simple-app.yaml
-
     curl http://ingress.localhost
 
 
 ## PHP + Ingress with Ingress
 
     minikube start --mount-string="./var:/tmp/shared";
-
     kubectl create -f build/nginx-php.yaml
-
     curl http://ingress.localhost
 
 
