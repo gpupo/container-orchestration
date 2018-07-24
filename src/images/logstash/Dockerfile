@@ -4,9 +4,7 @@ ARG CO_VERSION
 FROM docker.elastic.co/logstash/logstash-oss:${ELK_VERSION}
 
 USER root
-
-RUN yum install sudo nmap-ncat -y; usermod -aG wheel logstash; echo "logstash:docker" | chpasswd
-
+RUN yum install sudo nmap-ncat telnet -y; usermod -aG wheel logstash; echo "logstash:docker" | chpasswd
 USER logstash
 
 # Add your logstash plugins setup here
@@ -14,6 +12,7 @@ USER logstash
 RUN logstash-plugin install logstash-filter-json; \
     logstash-plugin install logstash-input-gelf; \
     logstash-plugin install logstash-input-tcp; \
+    logstash-plugin install logstash-input-rabbitmq; \
     logstash-plugin install logstash-input-syslog
 
 LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
@@ -25,4 +24,3 @@ LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration
 
 EXPOSE 12201/udp
 EXPOSE 12202/udp
-EXPOSE 5000/udp
