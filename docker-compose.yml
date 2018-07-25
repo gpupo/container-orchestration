@@ -89,11 +89,11 @@ services:
     #         args:
     #           CO_VERSION: ${CO_VERSION}
     #     image: gpupo/container-orchestration:simpleHTTPServer-${CO_VERSION}
-    # debian:
-    #     container_name: debian
-    #     build:
-    #         context: ./src/images/debian/
-    #     image: gpupo/container-orchestration:debian-latest
+    debian:
+        container_name: debian
+        build:
+            context: ./src/images/debian/
+        image: gpupo/container-orchestration:debian-${CO_VERSION}
     # mariadb:
     #     container_name: mariadb
     #     build:
@@ -150,25 +150,14 @@ services:
     #     environment:
     #         RABBIT_URL: 'amqp://rabbitmq'
     #
-    # rabbitmq:
-    #     container_name: rabbitmq
-    #     build:
-    #         context: ./src/images/rabbitmq/
-    #         args:
-    #           CO_VERSION: ${CO_VERSION}
-    #     image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
-        # ports:
-    #         - "5672:5672"
-    #         - "15672:15672"
-    #         - "15671:15671"
-    #     privileged: true
-    #     environment:
-    #         - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-    #         - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-    #     depends_on:
-    #         - php
-    #     networks:
-    #         - backend
+    rabbitmq:
+        container_name: rabbitmq
+        build:
+            context: ./src/images/rabbitmq/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
+
 
 networks:
     frontend:

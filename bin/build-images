@@ -1,9 +1,23 @@
-#/bin/bash
+#!/bin/bash
+source .env
+
+printf "\n----\n\t** $CO_VERSION\n\n";
 
 #Delete namespace local images
 #docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
-# Update images
-#docker images | grep -v "REPOSITORY\|none" | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker pull
 
 docker-compose build
-#docker push gpupo/container-orchestration
+
+docker images | grep $CO_VERSION | cut -d $' ' -f 24 | while read FULLNAME
+do
+    LATEST="${FULLNAME/$CO_VERSION/latest}"
+    SIMPLE="${FULLNAME/-$CO_VERSION/}"
+    echo $SIMPLE
+    docker tag gpupo/container-orchestration:$FULLNAME container-orchestration:$LATEST
+    docker tag gpupo/container-orchestration:$FULLNAME container-orchestration:$SIMPLE
+done
+
+docker tag gpupo/container-orchestration:debian-$CO_VERSION container-orchestration:latest
+
+
+docker push gpupo/container-orchestration
