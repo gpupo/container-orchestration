@@ -11,7 +11,23 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.profile
 
 RUN mkdir -p /usr/local/bin/;   mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
-RUN /usr/local/bin/composer global require friendsofphp/php-cs-fixer; \
+RUN /usr/local/bin/composer global require symfony/dotenv; \
+    /usr/local/bin/composer global require symfony/var-dumper; \
+    /usr/local/bin/composer global require symfony/finder; \
+    /usr/local/bin/composer global require phpspec/prophecy; \
+    /usr/local/bin/composer global require phpunit/phpunit:^7.2; \
+    /usr/local/bin/composer global require friendsofphp/php-cs-fixer; \
     /usr/local/bin/composer global require "squizlabs/php_codesniffer=*"; \
     /usr/local/bin/composer global require escapestudios/symfony2-coding-standard:3.x-dev; \
     /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard
+
+
+
+
+    "symfony/var-dumper": "^4.1",
+  "gpupo/common-schema": "^4.3|dev-master",
+  "symfony/finder": "^4.1",
+  "symfony/cache": "^4.1",
+  "symfony/filesystem": "^4.1",
+  "phpspec/prophecy": "~1.0",
+  "phpunit/phpunit": "^7.2"
