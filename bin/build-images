@@ -4,7 +4,7 @@ source .env
 printf "\n----\n\t** $CO_VERSION\n\n";
 
 #Delete namespace local images
-#docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
+docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
 
 docker-compose build
 

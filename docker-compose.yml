@@ -45,6 +45,15 @@ services:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:python-dev-${CO_VERSION}
 
+    jekyll:
+        container_name: jekyll
+        build:
+            context: ./src/images/jekyll/
+            args:
+              CO_VERSION: ${CO_VERSION}
+              JEKYLL_VERSION: ${JEKYLL_VERSION}
+        image: gpupo/container-orchestration:jekyll-${CO_VERSION}
+
     nginx-core:
         container_name: nginx-core
         build:
@@ -81,7 +90,6 @@ services:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nginx-wordpress-${CO_VERSION}
 
-
     # simpleHTTPServer:
     #     container_name: simpleHTTPServer
     #     build:
@@ -94,24 +102,6 @@ services:
         build:
             context: ./src/images/debian/
         image: gpupo/container-orchestration:debian-${CO_VERSION}
-    # mariadb:
-    #     container_name: mariadb
-    #     build:
-    #         context: ./src/images/mariadb/
-    #     image: gpupo/container-orchestration:mariadb-${CO_VERSION}
-    #     ports:
-    #         - "3306:3306"
-    #     volumes:
-    #         - mariadb-data:/var/lib/mysql
-    #     networks:
-    #         - frontend
-    #         - backend
-    #     environment:
-    #         - MYSQL_DATABASE=${MARIADB_DATABASE}
-    #         - MYSQL_USER=${MARIADB_USER}
-    #         - MYSQL_PASSWORD=${MARIADB_PASSWORD}
-    #         - MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-    #
     elasticsearch:
         container_name: elasticsearch
         build:

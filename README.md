@@ -2,7 +2,7 @@
 
 Container-orchestration sets for automating deployment, scaling and management of containerized clusters
 
-[![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration)
+[![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration) [![Docker Stars](https://img.shields.io/docker/stars/gpupo/container-orchestration.svg?style=for-the-badge)]() [![Docker Pulls](https://img.shields.io/docker/pulls/gpupo/container-orchestration.svg?style=for-the-badge)]()
 
 ## Requirements
 - Docker
