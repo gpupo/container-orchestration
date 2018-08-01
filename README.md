@@ -2,7 +2,7 @@
 
 Container-orchestration sets for automating deployment, scaling and management of containerized clusters
 
-[![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration) [![Docker Stars](https://img.shields.io/docker/stars/gpupo/container-orchestration.svg?style=for-the-badge)]() [![Docker Pulls](https://img.shields.io/docker/pulls/gpupo/container-orchestration.svg?style=for-the-badge)]()
+[![Build Status](https://secure.travis-ci.org/gpupo/container-orchestration.png?branch=master)](http://travis-ci.org/gpupo/container-orchestration) [![Docker Stars](https://img.shields.io/docker/stars/gpupo/container-orchestration.svg?style=for-the-badge)](https://hub.docker.com/r/gpupo/container-orchestration/) [![Docker Pulls](https://img.shields.io/docker/pulls/gpupo/container-orchestration.svg?style=for-the-badge)](https://hub.docker.com/r/gpupo/container-orchestration/)
 
 ## Requirements
 - Docker
@@ -14,17 +14,17 @@ Container-orchestration sets for automating deployment, scaling and management o
 Python
 
     docker run -v "$PWD":/usr/src/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:python-dev-v1.4.11;
+	gpupo/container-orchestration:python-dev-latest;
 
 PHP
 
 	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:php-dev-v1.4.11
+	gpupo/container-orchestration:php-dev-latest
 
 Node
 
 	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:nodejs-dev-v1.4.11
+	gpupo/container-orchestration:nodejs-dev-latest
 
 
 To run  `Symfony 4`, create th `docker-compose.yaml` file with content:
@@ -35,14 +35,14 @@ version: '2'
 services:
     php:
         container_name: php
-        image: gpupo/container-orchestration:php-fpm-v1.4.11
+        image: gpupo/container-orchestration:php-fpm-latest
         volumes:
             - ./:/var/www/app
         networks:
             - backend
     nginx-upstream:
         container_name: nginx-upstream
-        image: gpupo/container-orchestration:nginx-upstream-v1.4.11
+        image: gpupo/container-orchestration:nginx-upstream-latest
         ports:
             - "80:80"
         links:
@@ -65,7 +65,7 @@ and run
 or simple run:
 
 
-  	docker run -d gpupo/container-orchestration:php-dev-v1.4.11
+  	docker run -d gpupo/container-orchestration:php-dev-latest
 
 
 ## Use as minikube asset
