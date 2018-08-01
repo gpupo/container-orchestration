@@ -8,16 +8,21 @@ docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk 
 
 docker-compose build
 
-docker images | grep $CO_VERSION | cut -d $' ' -f 24 | while read FULLNAME
-do
-    LATEST="${FULLNAME/$CO_VERSION/latest}"
-    SIMPLE="${FULLNAME/-$CO_VERSION/}"
-    echo $SIMPLE
-    docker tag gpupo/container-orchestration:$FULLNAME container-orchestration:$LATEST
-    docker tag gpupo/container-orchestration:$FULLNAME container-orchestration:$SIMPLE
-done
+tagImages() {
+    COL_SPACE=" | "
+    printf "FULLNAME $COL_SPACE SIMPLE-NAME $COL_SPACE LATEST-NAME\n"
 
-docker tag gpupo/container-orchestration:debian-$CO_VERSION container-orchestration:latest
+    docker images | grep $CO_VERSION | cut -d $' ' -f 24 | while read FULLNAME
+    do
+        LATEST="${FULLNAME/$CO_VERSION/latest}"
+        SIMPLE="${FULLNAME/-$CO_VERSION/}"
+        printf "$FULLNAME $COL_SPACE $SIMPLE $COL_SPACE $LATEST\n";
+        docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$LATEST
+        docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$SIMPLE
+    done
+}
 
+tagImages | column -t
 
+docker tag gpupo/container-orchestration:debian-$CO_VERSION gpupo/container-orchestration:latest
 docker push gpupo/container-orchestration

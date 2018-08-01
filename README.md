@@ -14,17 +14,17 @@ Container-orchestration sets for automating deployment, scaling and management o
 Python
 
     docker run -v "$PWD":/usr/src/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:python-dev-latest;
+	gpupo/container-orchestration:python-dev
 
 PHP
 
 	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:php-dev-latest
+	gpupo/container-orchestration:php-dev
 
 Node
 
 	docker run -v "$PWD":/var/www/app -it --entrypoint /bin/bash \
-	gpupo/container-orchestration:nodejs-dev-latest
+	gpupo/container-orchestration:nodejs-dev
 
 
 To run  `Symfony 4`, create th `docker-compose.yaml` file with content:
@@ -35,14 +35,14 @@ version: '2'
 services:
     php:
         container_name: php
-        image: gpupo/container-orchestration:php-fpm-latest
+        image: gpupo/container-orchestration:php-fpm
         volumes:
             - ./:/var/www/app
         networks:
             - backend
     nginx-upstream:
         container_name: nginx-upstream
-        image: gpupo/container-orchestration:nginx-upstream-latest
+        image: gpupo/container-orchestration:nginx-upstream
         ports:
             - "80:80"
         links:
@@ -65,7 +65,7 @@ and run
 or simple run:
 
 
-  	docker run -d gpupo/container-orchestration:php-dev-latest
+  	docker run -d gpupo/container-orchestration:php-dev
 
 
 ## Use as minikube asset
