@@ -24,5 +24,10 @@ tagImages() {
 
 tagImages | column -t
 
-docker tag gpupo/container-orchestration:debian-$CO_VERSION gpupo/container-orchestration:latest
-docker push gpupo/container-orchestration
+read -p "Publish to Docker Hub? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    docker tag gpupo/container-orchestration:debian-$CO_VERSION gpupo/container-orchestration:latest
+    docker push gpupo/container-orchestration
+fi
