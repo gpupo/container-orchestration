@@ -3,10 +3,14 @@ source .env
 
 printf "\n----\n\t** $CO_VERSION\n\n";
 
-#Delete namespace local images
-docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
-
-docker-compose build
+read -p "Build images? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    #Delete namespace local images
+    docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
+    docker-compose build
+fi
 
 tagImages() {
     COL_SPACE=" | "
@@ -22,9 +26,15 @@ tagImages() {
     done
 }
 
-tagImages | column -t
 
-read -p "Publish to Docker Hub? " -n 1 -r
+read -p "Tag images? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    tagImages | column -t
+fi
+
+read -p "Publish images to Docker Hub? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then

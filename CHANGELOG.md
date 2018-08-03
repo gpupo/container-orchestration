@@ -3,6 +3,10 @@ VERSION 1  PHP+NGINX
 ====================
 
    Version 1.1 - Start/Stop Button
+      03/08/2018 09:28  1.4.14  Add ruby
+         cb3112d Add ruby
+         124379d add doc
+         2499652 doc
       25/07/2018 14:08  1.1.1  Add Dev Images
          e7cd561 turn on Debian
          e86a9c4 	fix
