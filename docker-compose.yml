@@ -16,12 +16,6 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
-        ports:
-            - "9000:9000"
-        volumes:
-            - app-data:/var/www/app
-        networks:
-            - backend
     php-dev:
         container_name: php-dev
         build:
@@ -43,7 +37,6 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:ruby-dev-${CO_VERSION}
-
     python-dev:
         container_name: python
         build:
@@ -51,7 +44,6 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:python-dev-${CO_VERSION}
-
     jekyll:
         container_name: jekyll
         build:
@@ -60,7 +52,6 @@ services:
               CO_VERSION: ${CO_VERSION}
               JEKYLL_VERSION: ${JEKYLL_VERSION}
         image: gpupo/container-orchestration:jekyll-${CO_VERSION}
-
     nginx-core:
         container_name: nginx-core
         build:
@@ -68,7 +59,6 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nginx-core-${CO_VERSION}
-
     nginx-upstream:
         container_name: nginx-upstream
         build:
@@ -76,19 +66,13 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
-        depends_on:
-          - nginx-core
-        ports:
-            - "80:80"
-        links:
-            - php
-        volumes:
-            - logs-data:/var/logs/nginx
-            - app-data:/var/www/app
-        networks:
-            - frontend
-            - backend
-
+    nginx-proxy:
+        container_name: nginx-proxy
+        build:
+            context: ./src/images/nginx-proxy/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-proxy-${CO_VERSION}
     nginx-wordpress:
         container_name: nginx-wordpress
         build:
