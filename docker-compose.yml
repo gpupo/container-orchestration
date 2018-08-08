@@ -80,14 +80,6 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nginx-wordpress-${CO_VERSION}
-
-    # simpleHTTPServer:
-    #     container_name: simpleHTTPServer
-    #     build:
-    #         context: ./src/images/simpleHTTPServer/
-    #         args:
-    #           CO_VERSION: ${CO_VERSION}
-    #     image: gpupo/container-orchestration:simpleHTTPServer-${CO_VERSION}
     debian:
         container_name: debian
         build:
