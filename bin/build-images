@@ -3,8 +3,20 @@ source .env
 
 printf "\n----\n\t** $CO_VERSION\n\n";
 
-read -p "Build images? " -n 1 -r
-echo
+PARAMETERS="$@"
+
+question() {
+    if [ "$PARAMETERS" == "--force" ] || [ "$PARAMETERS" == "-f" ]
+    then
+        echo "Force argument detected."
+        REPLY='Y'
+    else
+        read -p "$1" -n 1 -r
+        echo
+    fi
+}
+
+question "Build images?"
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #Delete namespace local images
@@ -26,16 +38,13 @@ tagImages() {
     done
 }
 
-
-read -p "Tag images? " -n 1 -r
-echo
+question "Tag images? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     tagImages | column -t
 fi
 
-read -p "Publish images to Docker Hub? " -n 1 -r
-echo
+question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     docker tag gpupo/container-orchestration:debian-$CO_VERSION gpupo/container-orchestration:latest

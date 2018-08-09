@@ -3,6 +3,11 @@ VERSION 1  PHP+NGINX
 ====================
 
    Version 1.1 - Start/Stop Button
+      09/08/2018 13:58  1.4.15  Add nginx core feature
+         a5a7bb8 Rm simple http server
+         08367d3 Add nginx proxy
+         234a39c update-version
+         5198eb8 Changelog
       03/08/2018 09:28  1.4.14  Add ruby
          cb3112d Add ruby
          124379d add doc
