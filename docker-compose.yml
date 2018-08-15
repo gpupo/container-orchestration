@@ -1,13 +1,5 @@
 version: '3'
 
-volumes:
-    mariadb-data:
-        driver: ${VOLUMES_DRIVER}
-    app-data:
-        driver: ${VOLUMES_DRIVER}
-    logs-data:
-        driver: ${VOLUMES_DRIVER}
-
 services:
     php:
         container_name: php
@@ -110,19 +102,6 @@ services:
               CO_VERSION: ${CO_VERSION}
               ELK_VERSION: ${ELK_VERSION}
         image: gpupo/container-orchestration:kibana-${CO_VERSION}
-
-    # jackrabbit:
-    #     container_name: jackrabbit
-    #     build:
-    #         context: ./src/images/jackrabbit/
-    #     image: gpupo/container-orchestration:jackrabbit-${CO_VERSION}
-    #     ports:
-    #         - "8081:8080"
-    #     links:
-    #         - rabbitmq
-    #     environment:
-    #         RABBIT_URL: 'amqp://rabbitmq'
-    #
     rabbitmq:
         container_name: rabbitmq
         build:
@@ -130,8 +109,3 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
-
-
-networks:
-    frontend:
-    backend:
