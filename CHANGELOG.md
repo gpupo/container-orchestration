@@ -3,6 +3,8 @@ VERSION 1  PHP+NGINX
 ====================
 
    Version 1.1 - Start/Stop Button
+      29/08/2018 10:39  1.4.16  Remove Jackrabbit
+         beb4025 Remove Jackrabbit; see https://hub.docker.com/r/gpupo/content-repository-server/
       09/08/2018 13:58  1.4.15  Add nginx core feature
          a5a7bb8 Rm simple http server
          08367d3 Add nginx proxy
