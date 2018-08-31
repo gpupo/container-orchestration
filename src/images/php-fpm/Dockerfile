@@ -17,6 +17,8 @@ RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-u
     docker-php-ext-install intl zip pdo pdo_mysql mbstring bcmath;\
     pecl install apcu && docker-php-ext-enable apcu;
 
+RUN pecl install redis && docker-php-ext-enable redis;
+
 RUN docker-php-ext-install gd  mysqli opcache ctype json mbstring; \
   usermod --shell /bin/bash www-data; \
   usermod --home /var/www/app www-data; \
