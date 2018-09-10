@@ -14,7 +14,8 @@ RUN logstash-plugin install logstash-filter-json; \
     logstash-plugin install logstash-input-tcp; \
     logstash-plugin install logstash-input-rabbitmq; \
     logstash-plugin install logstash-input-syslog; \
-    logstash-plugin install logstash-filter-geoip;
+    logstash-plugin install logstash-filter-geoip; \
+    logstash-plugin install --version 3.2.0 logstash-filter-mutate
 
 RUN wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz; gunzip GeoLite2-City.mmdb.gz; mv GeoLite2-City.mmdb data/;
 
