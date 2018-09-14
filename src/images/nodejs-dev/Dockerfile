@@ -9,3 +9,6 @@ LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration
       org.label-schema.url="https://github.com/gpupo/container-orchestration"
 
 WORKDIR /var/www/app
+
+RUN curl --compressed -o- -L https://yarnpkg.com/install.sh | bash; \
+    echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
