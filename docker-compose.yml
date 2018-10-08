@@ -15,6 +15,13 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
+    symfony-dev:
+        container_name: symfony-dev
+        build:
+            context: ./src/images/symfony-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:symfony-dev-${CO_VERSION}
     nodejs-dev:
         container_name: nodejs-dev
         build:
