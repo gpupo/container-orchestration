@@ -2,6 +2,17 @@
 VERSION 1  PHP+NGINX
 ====================
 
+   Version 1.5 - Add PHP mongodb and sockets, dev tools and filebeat
+      06/11/2018 11:45  1.5.0  initial release
+         f045ab5 Add mongodb
+         87200eb Add phpspy, ast and phan
+         aff17b7 Add symfony-dev image
+         b3522e9 Add symfony dev env
+         5c966e5 Add node yarn
+         fc2b773 Add custom mutate filter
+         953a373 Add filebeat
+         ba906e0 Add redis
+
    Version 1.1 - Start/Stop Button
       29/08/2018 10:39  1.4.16  Remove Jackrabbit
          beb4025 Remove Jackrabbit; see https://hub.docker.com/r/gpupo/content-repository-server/
