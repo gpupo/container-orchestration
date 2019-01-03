@@ -1,12 +1,12 @@
 version: '3'
-
 services:
     php:
         container_name: php
         build:
             context: ./src/images/php-fpm/
             args:
-              CO_VERSION: ${CO_VERSION}
+              - PHP_VERSION=${PHP_VERSION}
+              - CO_VERSION=${CO_VERSION}
         image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
     php-dev:
         container_name: php-dev
