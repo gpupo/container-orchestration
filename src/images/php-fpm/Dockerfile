@@ -9,11 +9,12 @@ LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration
       org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian" \
       org.label-schema.url="https://github.com/gpupo/container-orchestration"
 
-RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping;\
+RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps;\
     apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev; \
     apt-get -q install -y curl libmcrypt-dev mysql-client libicu-dev; \
     apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat; \
     docker-php-ext-configure intl; \
+    docker-php-ext-configure calendar; \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-install intl soap zip pdo pdo_mysql mbstring bcmath sockets;\
     pecl install apcu && docker-php-ext-enable apcu;\
