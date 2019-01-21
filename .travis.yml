@@ -21,6 +21,4 @@ before_install:
 script:
   - docker-compose build php
   - docker-compose build nginx-upstream
-  - docker-compose start php
-  - docker-compose start nginx-upstream
-  - docker-compose ps
+  - docker-compose up php nginx-upstream
