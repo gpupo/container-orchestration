@@ -20,5 +20,6 @@ before_install:
   - sudo service mysql stop
 script:
   - docker-compose build php
-  - docker-compose build nginx-upstream
-  - docker-compose up php nginx-upstream
+  - docker-compose up -d php
+  - docker-compose ps
+  - docker-compose down
