@@ -2,6 +2,16 @@
 VERSION 1  PHP+NGINX
 ====================
 
+   Version 1.6 - Php 7
+      05/02/2019 17:16  1.6.0  initial release
+         43ea656 Add dc down
+         c5ad26d fix dc up
+         d4ac595 simplify travis
+         f80b691 Update travis
+         4cce3bb Add php lib
+         3872ab0 Fix Calendar
+         072ce8e Add php 7.3.1 support
+
    Version 1.5 - Add PHP mongodb and sockets, dev tools and filebeat
       06/11/2018 11:45  1.5.0  initial release
          f045ab5 Add mongodb
