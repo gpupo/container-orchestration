@@ -41,11 +41,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 RUN mkdir -p /usr/local/bin/;\
     mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer; \
-    composer global require bamarni/symfony-console-autocomplete:dev-master;\
-    echo '###> add by php-fpm ###' >> /root/.bash_profile;\
-    echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> /root/.bash_profile;\
-    echo 'eval "$(symfony-autocomplete --shell bash)"' >> /root/.bash_profile;\
-    echo '###< add by php-fpm build file ###' >> /root/.bash_profile;
+    composer global require bamarni/symfony-console-autocomplete:dev-master;
+
+COPY .bashrc /root/
 
 WORKDIR /var/www/app
 

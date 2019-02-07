@@ -1,0 +1,48 @@
+version: '3'
+services:
+    php-fpm:
+        build:
+            context: ./src/images/php-fpm/
+            args:
+              - PHP_VERSION=${PHP_VERSION}
+              - CO_VERSION=${CO_VERSION}
+        image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
+        env_file:
+            - .env
+    php-dev:
+        container_name: php-dev
+        build:
+            context: ./src/images/php-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:php-dev-${CO_VERSION}
+        env_file:
+            - .env
+    symfony-dev:
+        container_name: symfony-dev
+        build:
+            context: ./src/images/symfony-dev/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:symfony-dev-${CO_VERSION}
+        env_file:
+            - .env
+    nginx-core:
+        container_name: nginx-core
+        build:
+            context: ./src/images/nginx-core/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-core-${CO_VERSION}
+        env_file:
+            - .env
+
+    nginx-upstream:
+        container_name: nginx-upstream
+        build:
+            context: ./src/images/nginx-upstream/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
+        env_file:
+            - .env

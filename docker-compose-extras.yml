@@ -1,27 +1,33 @@
 version: '3'
 services:
-    php:
-        container_name: php
+    debian:
+        container_name: debian
+        # build:
+        #     context: ./src/images/debian/
+        image: gpupo/container-orchestration
+        env_file:
+            - .env
+
+    nginx-proxy:
+        container_name: nginx-proxy
         build:
-            context: ./src/images/php-fpm/
-            args:
-              - PHP_VERSION=${PHP_VERSION}
-              - CO_VERSION=${CO_VERSION}
-        image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
-    php-dev:
-        container_name: php-dev
-        build:
-            context: ./src/images/php-dev/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:php-dev-${CO_VERSION}
-    symfony-dev:
-        container_name: symfony-dev
-        build:
-            context: ./src/images/symfony-dev/
+            context: ./src/images/nginx-proxy/
             args:
               CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:symfony-dev-${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-proxy-${CO_VERSION}
+        env_file:
+            - .env
+
+    nginx-wordpress:
+        container_name: nginx-wordpress
+        build:
+            context: ./src/images/nginx-wordpress/
+            args:
+              CO_VERSION: ${CO_VERSION}
+        image: gpupo/container-orchestration:nginx-wordpress-${CO_VERSION}
+        env_file:
+            - .env
+
     nodejs-dev:
         container_name: nodejs-dev
         build:
@@ -29,6 +35,8 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:nodejs-dev-${CO_VERSION}
+        env_file:
+            - .env
     ruby-dev:
         container_name: ruby-dev
         build:
@@ -36,6 +44,9 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:ruby-dev-${CO_VERSION}
+        env_file:
+            - .env
+
     python-dev:
         container_name: python
         build:
@@ -43,6 +54,9 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:python-dev-${CO_VERSION}
+        env_file:
+            - .env
+
     jekyll:
         container_name: jekyll
         build:
@@ -51,39 +65,7 @@ services:
               CO_VERSION: ${CO_VERSION}
               JEKYLL_VERSION: ${JEKYLL_VERSION}
         image: gpupo/container-orchestration:jekyll-${CO_VERSION}
-    nginx-core:
-        container_name: nginx-core
-        build:
-            context: ./src/images/nginx-core/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-core-${CO_VERSION}
-    nginx-upstream:
-        container_name: nginx-upstream
-        build:
-            context: ./src/images/nginx-upstream/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
-    nginx-proxy:
-        container_name: nginx-proxy
-        build:
-            context: ./src/images/nginx-proxy/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-proxy-${CO_VERSION}
-    nginx-wordpress:
-        container_name: nginx-wordpress
-        build:
-            context: ./src/images/nginx-wordpress/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-wordpress-${CO_VERSION}
-    debian:
-        container_name: debian
-        build:
-            context: ./src/images/debian/
-        image: gpupo/container-orchestration:debian-${CO_VERSION}
+
     elasticsearch:
         container_name: elasticsearch
         build:
@@ -92,6 +74,9 @@ services:
               CO_VERSION: ${CO_VERSION}
               ELK_VERSION: ${ELK_VERSION}
         image: gpupo/container-orchestration:elasticsearch-${CO_VERSION}
+        env_file:
+            - .env
+
     logstash:
         container_name: logstash
         build:
@@ -100,6 +85,8 @@ services:
               CO_VERSION: ${CO_VERSION}
               ELK_VERSION: ${ELK_VERSION}
         image: gpupo/container-orchestration:logstash-${CO_VERSION}
+        env_file:
+            - .env
 
     kibana:
         container_name: kibana
@@ -109,6 +96,9 @@ services:
               CO_VERSION: ${CO_VERSION}
               ELK_VERSION: ${ELK_VERSION}
         image: gpupo/container-orchestration:kibana-${CO_VERSION}
+        env_file:
+            - .env
+
     rabbitmq:
         container_name: rabbitmq
         build:
@@ -116,3 +106,5 @@ services:
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:rabbitmq-${CO_VERSION}
+        env_file:
+            - .env

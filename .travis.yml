@@ -19,7 +19,7 @@ before_install:
   - docker -v
   - sudo service mysql stop
 script:
-  - docker-compose build php
-  - docker-compose up -d php
-  - docker-compose ps
-  - docker-compose down
+  - docker-compose -f docker-compose-php.yml build php-fpm
+  - docker-compose -f docker-compose-php.yml up -d php-fpm
+  - docker-compose -f docker-compose-php.yml ps
+  - docker-compose -f docker-compose-php.yml down

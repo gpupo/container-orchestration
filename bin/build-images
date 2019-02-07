@@ -21,7 +21,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #Delete namespace local images
     docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
-    docker-compose build
+    docker-compose -f docker-compose-php.yml build
 fi
 
 tagImages() {
