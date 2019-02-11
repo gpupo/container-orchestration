@@ -14,6 +14,7 @@ RUN apk add --update nginx curl vim git busybox-extras;\
 
 ADD nginx.conf /etc/nginx/
 COPY default.conf /etc/nginx/conf.d/
+COPY .bashrc /root/
 
 RUN adduser -D -g '' -G www-data www-data;
 

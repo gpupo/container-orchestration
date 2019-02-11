@@ -8,16 +8,6 @@ services:
         env_file:
             - .env
 
-    nginx-proxy:
-        container_name: nginx-proxy
-        build:
-            context: ./src/images/nginx-proxy/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-proxy-${CO_VERSION}
-        env_file:
-            - .env
-
     nginx-wordpress:
         container_name: nginx-wordpress
         build:
