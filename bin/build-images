@@ -1,7 +1,8 @@
 #!/bin/bash
 source .env
 
-printf "\n----\n\t** $CO_VERSION\n\n";
+CURRENT_TAG_VERSION=$(git tag -l | grep "^[0-9]" | tail -n 1)
+printf "\n----\n\t** $CURRENT_TAG_VERSION\n\n";
 
 PARAMETERS="$@"
 
@@ -28,10 +29,10 @@ tagImages() {
     COL_SPACE=" | "
     printf "FULLNAME $COL_SPACE SIMPLE-NAME $COL_SPACE LATEST-NAME\n"
 
-    docker images | grep $CO_VERSION | cut -d $' ' -f 24 | while read FULLNAME
+    docker images | grep $CURRENT_TAG_VERSION | cut -d $' ' -f 24 | while read FULLNAME
     do
-        LATEST="${FULLNAME/$CO_VERSION/latest}"
-        SIMPLE="${FULLNAME/-$CO_VERSION/}"
+        LATEST="${FULLNAME/$CURRENT_TAG_VERSION/latest}"
+        SIMPLE="${FULLNAME/-$CURRENT_TAG_VERSION/}"
         printf "$FULLNAME $COL_SPACE $SIMPLE $COL_SPACE $LATEST\n";
         docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$LATEST
         docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$SIMPLE
@@ -47,6 +48,6 @@ fi
 question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    docker tag gpupo/container-orchestration:debian-$CO_VERSION gpupo/container-orchestration:latest
+    docker tag gpupo/container-orchestration:debian-$CURRENT_TAG_VERSION gpupo/container-orchestration:latest
     docker push gpupo/container-orchestration
 fi
