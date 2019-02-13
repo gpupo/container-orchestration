@@ -1,13 +1,24 @@
 ARG PHP_VERSION
 ARG CO_VERSION
+ARG BUILD_DATE
+ARG VCS_REF
+ARG BUILD_VERSION
+
 FROM php:${PHP_VERSION}-fpm
 # see https://hub.docker.com/_/php/
-LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
-      org.label-schema.schema-version="${CO_VERSION}" \
-      org.label-schema.vendor="gpupo" \
-      org.label-schema.name="container-orchestration" \
-      org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian" \
-      org.label-schema.url="https://github.com/gpupo/container-orchestration"
+
+# Labels.
+LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.name="gpupo/container-orchestration:php-fpm"
+LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian"
+LABEL org.label-schema.url="https://opensource.gpupo.com/container-orchestration/"
+LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration"
+LABEL org.label-schema.vcs-ref=$VCS_REF
+LABEL org.label-schema.vendor="gpupo"
+LABEL org.label-schema.version=$BUILD_VERSION
+LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-fpm"
+
 
 RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps;\
     apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev; \
