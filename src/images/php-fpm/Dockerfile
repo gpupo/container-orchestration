@@ -26,7 +26,7 @@ RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-u
     apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat; \
     docker-php-ext-configure intl; \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-    docker-php-ext-install calendar intl soap zip pdo pdo_mysql mbstring bcmath sockets;\
+    docker-php-ext-install calendar intl soap zip pdo pdo_mysql mbstring bcmath sockets exif fileinfo;\
     pecl install apcu && docker-php-ext-enable apcu;\
     pecl install mongodb && docker-php-ext-enable mongodb;
 
