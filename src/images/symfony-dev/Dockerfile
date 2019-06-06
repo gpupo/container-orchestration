@@ -4,7 +4,7 @@ FROM gpupo/container-orchestration:php-dev-${CO_VERSION}
 
 # Labels.
 LABEL org.label-schema.name="gpupo/container-orchestration:symfony-dev"
-LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, Development tools and Yarn/Webpack for SF4 Development"
+LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, Nodejs 11, Development tools and Yarn/Webpack for SF4 Development"
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:symfony-dev"
 
 #Install nodejs and yarn (https://github.com/nodesource/distributions#debinstall)
@@ -13,3 +13,6 @@ RUN apt-get install -y gcc g++ make gnupg2; curl -sL https://deb.nodesource.com/
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash;
 
 RUN echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
+
+EXPOSE 3000
+EXPOSE 3001
