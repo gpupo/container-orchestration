@@ -53,8 +53,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 
 
 RUN mkdir -p /usr/local/bin/;\
-    mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer; \
-    composer global require bamarni/symfony-console-autocomplete:dev-master;
+    mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
 
 COPY .bashrc /root/
 
