@@ -2,17 +2,26 @@ version: '3'
 services:
     php-fpm:
         build:
-            context: ./src/images/php-fpm/
+            context: ./src/images/php/php-fpm/
             args:
               - PHP_VERSION=${PHP_VERSION}
               - CO_VERSION=${CO_VERSION}
         image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
         env_file:
             - .env
+    php5-fpm:
+        build:
+            context: ./src/images/php/php-fpm/
+            args:
+              - PHP_VERSION=${PHP5_VERSION}
+              - CO_VERSION=${CO_VERSION}
+        image: gpupo/container-orchestration:php5-fpm-${CO_VERSION}
+        env_file:
+            - .env
     php-dev:
         container_name: php-dev
         build:
-            context: ./src/images/php-dev/
+            context: ./src/images/php/php-dev/
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
@@ -21,7 +30,7 @@ services:
     symfony-dev:
         container_name: symfony-dev
         build:
-            context: ./src/images/symfony-dev/
+            context: ./src/images/php/symfony-dev/
             args:
               CO_VERSION: ${CO_VERSION}
         image: gpupo/container-orchestration:symfony-dev-${CO_VERSION}
