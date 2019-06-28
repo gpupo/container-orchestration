@@ -23,17 +23,19 @@ services:
         build:
             context: ./src/images/php/php-dev/
             args:
-              CO_VERSION: ${CO_VERSION}
+              - CO_VERSION=${CO_VERSION}
+              - PHP_SUFIX=
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
         env_file:
             - .env
-    symfony-dev:
-        container_name: symfony-dev
+    php5-dev:
+        container_name: php5-dev
         build:
-            context: ./src/images/php/symfony-dev/
+            context: ./src/images/php/php5-dev/
             args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:symfony-dev-${CO_VERSION}
+              - CO_VERSION=${CO_VERSION}
+              - PHP_VERSION=${PHP5_VERSION}
+        image: gpupo/container-orchestration:php5-dev-${CO_VERSION}
         env_file:
             - .env
     nginx-core:
