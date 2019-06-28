@@ -50,8 +50,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     php composer-setup.php; \
     php -r "unlink('composer-setup.php');"
 
-
-
 RUN mkdir -p /usr/local/bin/;\
     mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
 
