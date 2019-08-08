@@ -7,19 +7,26 @@ LABEL org.label-schema.name="gpupo/container-orchestration:php-dev"
 LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, Nodejs 11, Development tools and Yarn/Webpack for SF4 Development"
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-dev"
 
-RUN  pecl install xdebug-2.6.0 && \
-    docker-php-ext-enable xdebug && \
-    apt-get install -y libxslt-dev && \
+RUN apt-get -q install -y python3;
+
+RUN  pecl install xdebug-2.7.2 && \
+    docker-php-ext-enable xdebug;
+
+RUN apt-get install -y libxslt-dev && \
     docker-php-ext-install xsl && \
     docker-php-ext-install xmlrpc && \
-    pecl install ast && docker-php-ext-enable ast && \
-    composer global config minimum-stability dev && \
+    pecl install ast && docker-php-ext-enable ast;
+
+
+RUN composer global config minimum-stability dev && \
     composer global config prefer-stable true && \
     composer global require symfony/dotenv gpupo/common symfony/var-dumper symfony/finder phpspec/prophecy \
     phpunit/phpunit friendsofphp/php-cs-fixer "squizlabs/php_codesniffer=*" escapestudios/symfony2-coding-standard:3.x-dev\
     phploc/phploc pdepend/pdepend phpmd/phpmd sebastian/phpcpd phpstan/phpstan maknz/slack phan/phan liip/rmt && \
-    /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard && \
-    RUN cd /root/ && \
+    /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard;
+
+
+RUN cd /root/ && \
     git clone https://github.com/adsr/phpspy.git && \
     cd phpspy && \
     make && \
