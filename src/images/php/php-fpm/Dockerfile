@@ -20,11 +20,12 @@ LABEL org.label-schema.version=$BUILD_VERSION
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-fpm"
 
 
-RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps;\
-    apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev; \
-    apt-get -q install -y curl libmcrypt-dev mysql-client libicu-dev; \
-    apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat; \
-    docker-php-ext-configure intl; \
+RUN set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps;
+RUN apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev;
+RUN apt-get -q install -y curl libmcrypt-dev mysql-client libicu-dev;
+RUN apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat;
+
+RUN docker-php-ext-configure intl; \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
     docker-php-ext-install calendar intl soap zip pdo pdo_mysql mbstring bcmath sockets exif fileinfo;\
     pecl install apcu && docker-php-ext-enable apcu;\
