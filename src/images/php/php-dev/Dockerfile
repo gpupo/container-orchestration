@@ -28,7 +28,8 @@ RUN  pecl install xdebug-2.6.0 && \
     rm -rf phpspy;
 
 #Install nodejs and yarn (https://github.com/nodesource/distributions#debinstall)
-RUN apt-get install -y gcc g++ make gnupg2; curl -sL https://deb.nodesource.com/setup_11.x | bash -  && \
+RUN apt-get install -y gcc g++ make gnupg2 && \
+    curl -sL https://deb.nodesource.com/setup_11.x | bash -  && \
     apt-get install -y nodejs && \
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
     echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
