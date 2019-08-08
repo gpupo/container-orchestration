@@ -29,17 +29,18 @@ then
 
     for serviceName in $(docker-compose -f docker-compose-php.yml config --services)
     do
-        printf ">> Build image [${serviceName}] v${CURRENT_TAG}...";
+        printf "\n>> Build image [${serviceName}] v${CURRENT_TAG}...\n";
 
-        docker-compose -f docker-compose-php.yml build ${serviceName} \
-             --build-arg BUILD_DATE=${BUILD_DATE} \
-             --build-arg VCS_REF=${VCS_REF} \
-             --build-arg BUILD_VERSION="${CURRENT_TAG}"
+        docker-compose -f docker-compose-php.yml build \
+             --build-arg BUILD_DATE="${BUILD_DATE}" \
+             --build-arg VCS_REF="${VCS_REF}" \
+             --build-arg BUILD_VERSION="${CURRENT_TAG}"\
+             ${serviceName};
 
         if [ $? -eq 0 ]; then
-            printf ">> Successfully builded image [${serviceName}] v${CURRENT_TAG}";
+            printf ">> Successfully builded image [${serviceName}] v${CURRENT_TAG}\n";
         else
-            printf ">> ERROR: FAILED with image [${serviceName}] v${CURRENT_TAG}";
+            printf ">> ERROR: FAILED with image [${serviceName}] v${CURRENT_TAG}\n";
             exit 1;
         fi
     done;
