@@ -22,7 +22,7 @@ RUN composer global config minimum-stability dev && \
     phploc/phploc pdepend/pdepend phpmd/phpmd sebastian/phpcpd phpstan/phpstan maknz/slack phan/phan liip/rmt && \
     /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard;
 
-#PHPSPY 
+#PHPSPY
 RUN cd /root/ && \
     git clone https://github.com/adsr/phpspy.git && \
     cd phpspy && \
@@ -38,5 +38,12 @@ RUN apt-get install -y gcc g++ make gnupg2 && \
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
     echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
 
+
+#Scripts
+COPY root/* /root/
+RUN chmod +x /root/*.sh
+CMD /root/cmd.sh
+
 EXPOSE 3000
 EXPOSE 3001
+EXPOSE 3002
