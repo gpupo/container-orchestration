@@ -22,6 +22,7 @@ RUN composer global config minimum-stability dev && \
     phploc/phploc pdepend/pdepend phpmd/phpmd sebastian/phpcpd phpstan/phpstan maknz/slack phan/phan liip/rmt && \
     /root/.composer/vendor/bin/phpcbf --config-set installed_paths /root/.composer/vendor/escapestudios/symfony2-coding-standard;
 
+#PHPSPY 
 RUN cd /root/ && \
     git clone https://github.com/adsr/phpspy.git && \
     cd phpspy && \
