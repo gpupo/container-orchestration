@@ -22,10 +22,27 @@ then
     #Delete namespace local images
     #docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
     #--no-cache=true
-    docker-compose -f docker-compose-php.yml build \
-         --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
-         --build-arg VCS_REF=$(git rev-parse --short HEAD) \
-         --build-arg BUILD_VERSION="$(git tag -l | grep "^[0-9]" | tail -n 1)"
+
+    CURRENT_TAG=$(git tag -l | grep "^[0-9]" | tail -n 1);
+    VCS_REF=$(git rev-parse --short HEAD);
+    BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ');
+
+    for serviceName in $(docker-compose -f docker-compose-php.yml config --services)
+    do
+        printf ">> Build image [${serviceName}] v${CURRENT_TAG}...";
+
+        docker-compose -f docker-compose-php.yml build ${serviceName} \
+             --build-arg BUILD_DATE=${BUILD_DATE} \
+             --build-arg VCS_REF=${VCS_REF} \
+             --build-arg BUILD_VERSION="${CURRENT_TAG}"
+
+        if [ $? -eq 0 ]; then
+            printf ">> Successfully builded image [${serviceName}] v${CURRENT_TAG}";
+        else
+            printf ">> ERROR: FAILED with image [${serviceName}] v${CURRENT_TAG}";
+            exit 1;
+        fi
+    done;
 fi
 
 tagImages() {
