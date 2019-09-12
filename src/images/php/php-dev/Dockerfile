@@ -38,6 +38,8 @@ RUN apt-get install -y gcc g++ make gnupg2 && \
     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
     echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
 
+#Extra Tools
+RUN apt-get install -y rsync
 
 #Scripts
 COPY root/* /root/
