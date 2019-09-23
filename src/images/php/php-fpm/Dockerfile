@@ -19,26 +19,9 @@ LABEL org.label-schema.vendor="gpupo"
 LABEL org.label-schema.version=$BUILD_VERSION
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-fpm"
 
-RUN cat /etc/os-release && \
-    set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps && \
-    apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt-get -q install -y curl libmcrypt-dev default-mysql-client libicu-dev && \
-    apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat && \
-    docker-php-ext-configure intl && \
-    docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
-    docker-php-ext-install calendar intl soap zip pdo pdo_mysql mbstring bcmath sockets exif fileinfo &&\
-    pecl install apcu && docker-php-ext-enable apcu &&\
-    pecl install mongodb && docker-php-ext-enable mongodb && \
-    pecl install redis && docker-php-ext-enable redis && \
-    docker-php-ext-install gd  mysqli opcache ctype json mbstring && \
-    usermod --shell /bin/bash www-data && \
-    usermod --home /var/www/app www-data && \
-    useradd -u 1001 -M docker && \
-    usermod -a -G docker www-data && \
-    usermod -a -G www-data docker && \
-    useradd -u 1000 -M rkt && \
-    usermod -a -G rkt www-data && \
-    usermod -a -G www-data rkt;
+COPY ./co-configure /usr/local/bin/
+RUN chmod +x /usr/local/bin/co-configure/*
+RUN /usr/local/bin/co-configure/run.sh
 
 COPY php.ini /usr/local/etc/php/
 COPY opcache-recommended.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
@@ -48,8 +31,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     php composer-setup.php; \
     php -r "unlink('composer-setup.php');"
 
-RUN mkdir -p /usr/local/bin/;\
-    mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
+RUN mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
 
 COPY .bashrc /root/
 
