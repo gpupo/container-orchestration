@@ -31,8 +31,7 @@ pecl install apcu && docker-php-ext-enable apcu &&\
     pecl install redis && docker-php-ext-enable redis && \
     function_docker-php-ext-install gd  mysqli opcache ctype json;
 
-function_print_banner "Clear docker php source";
-docker-php-source delete;
+function_end_build
 
 function_print_banner "Configure unix user";
 usermod --shell /bin/bash www-data && \
