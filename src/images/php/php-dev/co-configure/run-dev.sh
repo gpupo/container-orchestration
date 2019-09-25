@@ -28,11 +28,20 @@ cd /root/ && \
     rm -rf phpspy;
 
 #Install nodejs and yarn (https://github.com/nodesource/distributions#debinstall)
-apt-get install -y gcc g++ make gnupg2 && \
-    curl -sL https://deb.nodesource.com/setup_11.x | bash -  && \
-    apt-get install -y nodejs && \
-    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
-    echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
+# apt-get install -y gcc g++ make gnupg2 && \
+#     curl -sL https://deb.nodesource.com/setup_11.x | bash -  && \
+#     apt-get install -y nodejs && \
+#     curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
+#     echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
+
+#Using NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+source /root/.bashrc;
+command -v nvm;
+nvm install 11.15.0;
+nvm install 12.10.0;
+nvm install 10.16.3
+nvm install 6.17.1;
 
 #Extra Tools
 apt-get install -y rsync
