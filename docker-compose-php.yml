@@ -19,22 +19,3 @@ services:
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
         env_file:
             - .env
-    nginx-core:
-        container_name: nginx-core
-        build:
-            context: ./src/images/nginx-core/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-core-${CO_VERSION}
-        env_file:
-            - .env
-
-    nginx-upstream:
-        container_name: nginx-upstream
-        build:
-            context: ./src/images/nginx-upstream/
-            args:
-              CO_VERSION: ${CO_VERSION}
-        image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
-        env_file:
-            - .env
