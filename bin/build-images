@@ -5,7 +5,7 @@ printf "\n----\n\t** $CO_VERSION\n\n";
 
 PARAMETERS="$@"
 
-question() {
+function_helper_question() {
     if [ "$PARAMETERS" == "--force" ] || [ "$PARAMETERS" == "-f" ]
     then
         echo "Force argument detected."
@@ -16,7 +16,7 @@ question() {
     fi
 }
 
-question "Build images?"
+function_helper_question "Build images?"
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #Delete namespace local images
@@ -60,13 +60,13 @@ tagImages() {
     done
 }
 
-question "Tag images? "
+function_helper_question "Tag images? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     tagImages | column -t
 fi
 
-question "Publish images to Docker Hub? "
+function_helper_question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     docker push gpupo/container-orchestration
