@@ -13,8 +13,8 @@ declare -a arr=(\
 echo "#$(date)" > build/nginx-php.yaml;
 for i in "${arr[@]}"
 do
-   cat "src/kompose/helm/templates/$i" | grep -v kompose >> build/nginx-php.yaml
-   echo '---' >> build/nginx-php.yaml;
+   cat "src/kompose/helm/templates/$i" | grep -v kompose >> builded/nginx-php.yaml
+   echo '---' >> builded/nginx-php.yaml;
 done
 
-cat src/kubernetes/ingress/nginx-upstream.yaml >> build/nginx-php.yaml;
+cat src/kubernetes/ingress/nginx-upstream.yaml >> builded/nginx-php.yaml;

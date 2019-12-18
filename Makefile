@@ -25,7 +25,11 @@ help:
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 ## build
-build:
-	cat .env.default > .env
-	echo "CO_VERSION=\"v$(git tag -l | grep "^1.[0-9]" | tail -n 1)\"" >> .env
-	# echo "docker-compose -f docker-compose.yaml  -f docker-compose.extra.yaml build";
+build@env:
+	bin/build-env
+    # echo "docker-compose -f docker-compose.yaml  -f docker-compose.extra.yaml build";
+
+## Build images with current git tag
+build@images: build@env
+build@images:
+	bin/build-images -f

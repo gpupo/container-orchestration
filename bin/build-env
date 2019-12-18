@@ -1,0 +1,8 @@
+#!/bin/bash
+cat .env.default > .env
+echo "###### > BUILDED VARS ######" >> .env
+echo "CO_VERSION=v$(git tag -l | grep "^1.[0-9]" | tail -n 1)" >> .env
+echo "VCS_REF=$(git rev-parse --short HEAD)" >> .env
+echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> .env
+echo "###### < BUILDED VARS ######" >> .env
+echo "Done.";
