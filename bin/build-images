@@ -22,7 +22,13 @@ then
     #Delete namespace local images
     docker images | grep -v "REPOSITORY\|none\|${CO_VERSION}" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
 
-    for serviceName in $(docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml config --services)
+    declare -a serviceList=(\
+      php-fpm \
+      php-dev \
+      nginx-core \
+      nginx-upstream \
+    )
+    for serviceName in "${serviceList[@]}"
     do
         printf "\n>> Build
         * image: ${serviceName}
@@ -32,7 +38,7 @@ then
         * manual command: docker-compose -f docker-compose-php.yml build ${serviceName};
         \n";
 
-        docker-compose -f docker-compose-php.yml build ${serviceName};
+        docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml build ${serviceName};
 
         if [ $? -eq 0 ]; then
             printf ">> Successfully builded image [${serviceName}] ${CO_VERSION}\n";
