@@ -23,18 +23,21 @@ then
     #docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
     #--no-cache=true
 
-    CURRENT_TAG=$(git tag -l | grep "^[0-9]" | tail -n 1);
     VCS_REF=$(git rev-parse --short HEAD);
     BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ');
 
     for serviceName in $(docker-compose -f docker-compose-php.yml config --services)
     do
-        printf "\n>> Build image [${serviceName}] v${CURRENT_TAG}...\n";
+        printf "\n>> Build
+        * image: ${serviceName}
+        * current tag: ${CO_VERSION}
+        * vcs ref: ${VCS_REF}
+        * build date: ${BUILD_DATE}\n";
 
         docker-compose -f docker-compose-php.yml build \
              --build-arg BUILD_DATE="${BUILD_DATE}" \
              --build-arg VCS_REF="${VCS_REF}" \
-             --build-arg BUILD_VERSION="${CURRENT_TAG}"\
+             --build-arg CO_VERSION="${CO_VERSION}"\
              ${serviceName};
 
         if [ $? -eq 0 ]; then

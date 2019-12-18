@@ -2,7 +2,6 @@ ARG PHP_VERSION
 ARG CO_VERSION
 ARG BUILD_DATE
 ARG VCS_REF
-ARG BUILD_VERSION
 
 FROM php:${PHP_VERSION}-fpm
 # see https://hub.docker.com/_/php/
@@ -16,7 +15,7 @@ LABEL org.label-schema.url="https://opensource.gpupo.com/container-orchestration
 LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration"
 LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.vendor="gpupo"
-LABEL org.label-schema.version=$BUILD_VERSION
+LABEL org.label-schema.version=$CO_VERSION
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-fpm"
 
 COPY ./co-configure /usr/local/bin/co-configure
