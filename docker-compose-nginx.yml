@@ -5,7 +5,10 @@ services:
         build:
             context: ./src/images/nginx-core/
             args:
-              CO_VERSION: ${CO_VERSION}
+              - ALPINE_VERSION=${ALPINE_VERSION}
+              - CO_VERSION=${CO_VERSION}
+              - BUILD_DATE=${BUILD_DATE}
+              - VCS_REF=${VCS_REF}
         image: gpupo/container-orchestration:nginx-core-${CO_VERSION}
         env_file:
             - .env
@@ -15,7 +18,10 @@ services:
         build:
             context: ./src/images/nginx-upstream/
             args:
-              CO_VERSION: ${CO_VERSION}
+              - ALPINE_VERSION=${ALPINE_VERSION}
+              - CO_VERSION=${CO_VERSION}
+              - BUILD_DATE=${BUILD_DATE}
+              - VCS_REF=${VCS_REF}
         image: gpupo/container-orchestration:nginx-upstream-${CO_VERSION}
         env_file:
             - .env

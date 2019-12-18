@@ -20,10 +20,9 @@ function_helper_question "Build images?"
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     #Delete namespace local images
-    #docker images | grep -v "REPOSITORY\|none" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
-    #--no-cache=true
+    docker images | grep -v "REPOSITORY\|none\|${CO_VERSION}" | grep container-orchestration | awk '{printf $1; printf ":"; print $2}' | xargs -L1 docker rmi -f
 
-    for serviceName in $(docker-compose -f docker-compose-php.yml config --services)
+    for serviceName in $(docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml config --services)
     do
         printf "\n>> Build
         * image: ${serviceName}
@@ -36,10 +35,10 @@ then
         docker-compose -f docker-compose-php.yml build ${serviceName};
 
         if [ $? -eq 0 ]; then
-            printf ">> Successfully builded image [${serviceName}] ${CURRENT_TAG}\n";
-            docker tag gpupo/container-orchestration:${serviceName}-${CURRENT_TAG} gpupo/container-orchestration:${serviceName}
+            printf ">> Successfully builded image [${serviceName}] ${CO_VERSION}\n";
+            docker tag gpupo/container-orchestration:${serviceName}-${CO_VERSION} gpupo/container-orchestration:${serviceName}
         else
-            printf ">> ERROR: FAILED with image [${serviceName}] v${CURRENT_TAG}\n";
+            printf ">> ERROR: FAILED with image [${serviceName}] ${CO_VERSION}\n";
             exit 1;
         fi
     done;

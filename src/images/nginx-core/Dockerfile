@@ -1,5 +1,6 @@
-FROM alpine:3.10
 ARG CO_VERSION
+ARG ALPINE_VERSION
+FROM alpine:${ALPINE_VERSION}
 EXPOSE 80
 
 LABEL org.label-schema.vcs-url="https://github.com/gpupo/container-orchestration.git" \
