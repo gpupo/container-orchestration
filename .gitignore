@@ -5,3 +5,4 @@ var/*
 *.jar
 *.war
 docker-compose.yaml
+.env
