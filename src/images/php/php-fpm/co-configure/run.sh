@@ -29,7 +29,7 @@ function_print_banner "APC";
 pecl install apcu && docker-php-ext-enable apcu &&\
     pecl install mongodb && docker-php-ext-enable mongodb && \
     pecl install redis && docker-php-ext-enable redis && \
-    function_docker-php-ext-install gd  mysqli opcache ctype json;
+    function_docker-php-ext-install gd  mysqli opcache ctype json xmlwriter;
 
 function_end_build
 
