@@ -8,12 +8,17 @@ pecl install xdebug-2.7.2 && \
 
 apt-get install -y gcc g++ make gnupg2 libxslt-dev && \
     docker-php-ext-install xsl && \
-    docker-php-ext-install xmlrpc && \
-    pecl install ast && docker-php-ext-enable ast;
+    docker-php-ext-install xmlrpc.
 
+function_print_banner "ast";
+pecl install ast && docker-php-ext-enable ast;
+
+function_print_banner "Composer dev packages";
+cat /root/.composer/composer.json;
 composer global install;
 
 #PHPSPY
+function_print_banner "PHPSPY";
 cd /root/ && \
     git clone https://github.com/adsr/phpspy.git && \
     cd phpspy && \
@@ -23,6 +28,7 @@ cd /root/ && \
     rm -rf phpspy;
 
 #Using NVM
+function_print_banner "NVM";
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 source /root/.bashrc;
 command -v nvm;
@@ -32,6 +38,7 @@ nvm install 10.16.3
 nvm install 6.17.1;
 
 #Install yarn
+function_print_banner "yarn";
 curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
   echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
 

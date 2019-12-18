@@ -29,16 +29,15 @@ then
         * image: ${serviceName}
         * current tag: ${CO_VERSION}
         * vcs ref: ${VCS_REF}
-        * build date: ${BUILD_DATE}\n";
+        * build date: ${BUILD_DATE}
+        * manual command: docker-compose -f docker-compose-php.yml build ${serviceName};
+        \n";
 
-        docker-compose -f docker-compose-php.yml build \
-             --build-arg BUILD_DATE="${BUILD_DATE}" \
-             --build-arg VCS_REF="${VCS_REF}" \
-             --build-arg CO_VERSION="${CO_VERSION}"\
-             ${serviceName};
+        docker-compose -f docker-compose-php.yml build ${serviceName};
 
         if [ $? -eq 0 ]; then
-            printf ">> Successfully builded image [${serviceName}] v${CURRENT_TAG}\n";
+            printf ">> Successfully builded image [${serviceName}] ${CURRENT_TAG}\n";
+            docker tag gpupo/container-orchestration:${serviceName}-${CURRENT_TAG} gpupo/container-orchestration:${serviceName}
         else
             printf ">> ERROR: FAILED with image [${serviceName}] v${CURRENT_TAG}\n";
             exit 1;
@@ -52,19 +51,17 @@ tagImages() {
 
     docker images | grep $CO_VERSION | cut -d $' ' -f 24 | while read FULLNAME
     do
-        LATEST="${FULLNAME/$CO_VERSION/latest}"
         SIMPLE="${FULLNAME/-$CO_VERSION/}"
         printf "$FULLNAME $COL_SPACE $SIMPLE $COL_SPACE $LATEST\n";
-        docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$LATEST
         docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$SIMPLE
     done
 }
 
-function_helper_question "Tag images? "
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    tagImages | column -t
-fi
+# function_helper_question "Tag images? "
+# if [[ $REPLY =~ ^[Yy]$ ]]
+# then
+#     tagImages | column -t
+# fi
 
 function_helper_question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
