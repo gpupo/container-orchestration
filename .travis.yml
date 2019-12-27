@@ -20,7 +20,6 @@ before_install:
   - sudo service mysql stop
   - make build@env
 script:
-  - docker-compose -f docker-compose-php.yml build php-fpm
-  - docker-compose -f docker-compose-php.yml up -d php-fpm
+  - docker-compose -f docker-compose-php.yml up -d --build php-fpm
   - docker-compose -f docker-compose-php.yml ps
   - docker-compose -f docker-compose-php.yml down
