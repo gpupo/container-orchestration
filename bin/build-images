@@ -36,7 +36,7 @@ then
         * current tag: ${CO_VERSION}
         * vcs ref: ${VCS_REF}
         * build date: ${BUILD_DATE}
-        * manual command: docker-compose -f docker-compose-php.yml build ${serviceName};
+        * manual command: docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml build ${serviceName};
         \n";
 
         docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml build ${serviceName};
