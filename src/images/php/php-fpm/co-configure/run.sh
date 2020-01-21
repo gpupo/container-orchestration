@@ -31,6 +31,11 @@ pecl install apcu && docker-php-ext-enable apcu &&\
     pecl install redis && docker-php-ext-enable redis && \
     function_docker-php-ext-install gd  mysqli opcache ctype json xmlwriter;
 
+function_print_banner "AMQP";
+apt-get install librabbitmq-dev && \
+    pecl install amqp && \
+    function_docker-php-ext-install amqp;
+
 function_end_build
 
 function_print_banner "Configure unix user";
