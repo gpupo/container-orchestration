@@ -3,15 +3,15 @@
 source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "xdebug";
-pecl install xdebug-2.7.2 && \
-    docker-php-ext-enable xdebug;
+function_pecl_install xdebug-2.7.2 && \
+    function_docker-php-ext-enable xdebug;
 
-apt-get install -y gcc g++ make gnupg2 libxslt-dev && \
-    docker-php-ext-install xsl && \
-    docker-php-ext-install xmlrpc.
+apt-get install -qq -y gcc g++ make gnupg2 libxslt-dev && \
+    function_docker-php-ext-install xsl && \
+    function_docker-php-ext-install xmlrpc
 
 function_print_banner "ast";
-pecl install ast && docker-php-ext-enable ast;
+function_pecl_install ast && function_docker-php-ext-enable ast;
 
 function_print_banner "Composer dev packages";
 cat /root/.composer/composer.json;
@@ -43,6 +43,6 @@ curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
   echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
 
 #Extra Tools
-apt-get install -y rsync bash-completion
+apt-get install -qq -y rsync bash-completion
 
 function_end_build

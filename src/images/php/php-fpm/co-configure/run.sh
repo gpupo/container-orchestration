@@ -4,12 +4,12 @@ source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "TOOLS";
 cat /etc/os-release && \
-    set -ex; apt-get -q update; apt-get install -y --no-install-recommends apt-utils iputils-ping procps && \
-    apt-get -q install -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt-get -q install -y curl libmcrypt-dev default-mysql-client libicu-dev;
+    set -e; apt-get -qq update; apt-get install -qq -y --no-install-recommends apt-utils iputils-ping procps && \
+    apt-get install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
+    apt-get install -qq -y curl libmcrypt-dev default-mysql-client libicu-dev;
 
 function_print_banner "LIBS";
-apt-get -q install -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev;
+apt-get install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
 
 function_docker-php-ext-configure intl;
 
@@ -26,15 +26,14 @@ function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo_
 # - pdo
 
 function_print_banner "APC";
-pecl install apcu && docker-php-ext-enable apcu &&\
-    pecl install mongodb && docker-php-ext-enable mongodb && \
-    pecl install redis && docker-php-ext-enable redis && \
+function_pecl_install apcu && function_docker-php-ext-enable apcu &&\
+    function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
+    function_pecl_install redis && function_docker-php-ext-enable redis && \
     function_docker-php-ext-install gd  mysqli opcache ctype json xmlwriter;
 
 function_print_banner "AMQP";
-apt-get install librabbitmq-dev && \
-    pecl install amqp && \
-    function_docker-php-ext-install amqp;
+    function_pecl_install amqp && \
+    function_docker-php-ext-enable amqp;
 
 function_end_build
 
