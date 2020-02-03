@@ -125,3 +125,7 @@ Put your code on `./var/app/public`
 ### Upload to Docker Hub (if you have permission!)
 
 	docker push gpupo/container-orchestration
+
+#### OSX upload workaround
+
+	docker login -u gpupo -p ******** docker.io && docker push gpupo/container-orchestration
