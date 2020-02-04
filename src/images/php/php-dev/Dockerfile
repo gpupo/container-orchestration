@@ -4,7 +4,7 @@ FROM gpupo/container-orchestration:php-fpm-${CO_VERSION}
 
 # Labels.
 LABEL org.label-schema.name="gpupo/container-orchestration:php-dev"
-LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, Nodejs 11, Development tools and Yarn/Webpack for SF4 Development"
+LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, Nodejs 11, Development tools and Yarn/Webpack for PHP Development"
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-dev"
 
 COPY root/.composer/composer.json /root/.composer/composer.json
