@@ -17,6 +17,10 @@ function_print_banner "Composer dev packages";
 cat /root/.composer/composer.json;
 composer global install;
 
+#phpcs
+function_print_banner "Configure PHPCS";
+~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/escapestudios/symfony2-coding-standard/
+
 #PHPSPY
 function_print_banner "PHPSPY";
 cd /root/ && \
