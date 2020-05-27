@@ -1,6 +1,9 @@
 #@see https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
 name: Buil Docker images at tag create
 on:
+  push:
+    branchs:
+      - master
   create:
     tags:
       - 1.*  
