@@ -1,0 +1,19 @@
+#@see https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
+name: Buil Docker images at tag create
+on:
+  create:
+    tags:
+      - 1.*  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      ‐ name: login
+        uses: docker/login-action@v1
+        with:
+          registry: myregistry
+          username: ${{ secretes.DOCKER_UID }}
+          password: ${{ secretes.DOCKER_PASSWORD }}
+      - name: Build
+        run: make build@images
