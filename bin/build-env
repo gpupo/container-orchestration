@@ -3,7 +3,7 @@ cat .env.default > .env
 echo "###### > BUILDED VARS ######" >> .env
 
 CURRENT_TAG=$1
-if [ -z "$CURRENT_TAG"]
+if [ -z "$CURRENT_TAG" ]
 then
     CURRENT_TAG=$(git tag -l | grep "^1.[0-9]" | tail -n 1);
 fi
