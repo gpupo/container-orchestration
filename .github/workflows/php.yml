@@ -10,7 +10,6 @@ on:
       - 'examples/**'
   push:
     branches:
-      - master
       - develop
       - verbose
     paths-ignore:

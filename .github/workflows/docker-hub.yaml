@@ -3,7 +3,7 @@ name: Buil Docker images at tag create
 on:
   push:
     branchs:
-      - master
+      - develop
   create:
     tags:
       - 1.*  
@@ -12,11 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      ‐ name: login
+      - name: Get Tag
+        id: get_tag
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: login
         uses: docker/login-action@v1
         with:
           registry: myregistry
           username: ${{ secretes.DOCKER_UID }}
           password: ${{ secretes.DOCKER_PASSWORD }}
-      - name: Build
-        run: make build@images
+      - name: Build Env
+        run: bin/build-env ${{ get_tag .output }}
+      - name: Build Images and Push
+        run: bin/build-images -f
