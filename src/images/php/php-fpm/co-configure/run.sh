@@ -16,14 +16,7 @@ function_docker-php-ext-configure intl;
 function_print_banner "GD";
 docker-php-ext-configure gd --with-jpeg=/usr;
 
-function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo_mysql calendar;
-
-# Pacotes com problemas:
-# - mbstring: No package 'oniguruma' found
-
-# Pacotes já instalados:
-# - mbstring
-# - pdo
+function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo_mysql pdo_pgsql calendar;
 
 function_print_banner "APC";
 function_pecl_install apcu && function_docker-php-ext-enable apcu &&\
