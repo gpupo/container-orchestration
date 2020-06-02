@@ -6,7 +6,7 @@ function_print_banner "TOOLS";
 cat /etc/os-release && \
     set -e; apt-get -qq update; apt-get install -qq -y --no-install-recommends apt-utils iputils-ping procps && \
     apt-get install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt-get install -qq -y curl libmcrypt-dev default-mysql-client libicu-dev;
+    apt-get install -qq -y curl libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
 function_print_banner "LIBS";
 apt-get install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
@@ -16,7 +16,7 @@ function_docker-php-ext-configure intl;
 function_print_banner "GD";
 docker-php-ext-configure gd --with-jpeg=/usr;
 
-function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo_mysql pdo_pgsql calendar;
+function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
 
 function_print_banner "APC";
 function_pecl_install apcu && function_docker-php-ext-enable apcu &&\
