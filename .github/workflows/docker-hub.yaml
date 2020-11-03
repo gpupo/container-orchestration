@@ -14,10 +14,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: Set env
-        run: echo ::set-env name=CURRENT_TAG_VERSION::${GITHUB_REF#refs/*/}
+        run: echo "CURRENT_TAG_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: login
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_UID }} --password-stdin
       - name: Build Env
-        run: bin/build-env ${{ env.CURRENT_TAG_VERSION }}
+        run: bin/build-env ${{CURRENT_TAG_VERSION}}
       - name: Build Images and Push
         run: bin/build-images -f
