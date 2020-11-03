@@ -9,7 +9,7 @@ cat /etc/os-release && \
     apt-get install -qq -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
 function_print_banner "Pickle";
-wget https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
+wget -q https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
 
 function_print_banner "LIBS";
 apt-get install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
