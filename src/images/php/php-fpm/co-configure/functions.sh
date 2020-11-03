@@ -29,8 +29,8 @@ function_docker-php-ext-configure() {
 
 function_pecl_install() {
   for lib in "$@"; do
-      function_print_banner "PECL INSTALL: $lib"
-      printf "\n" | pecl install $lib >> /tmp/docker-compose-buid-php.log;
+      function_print_banner "PECL INSTALL (Pickle): $lib"
+      printf "\n" | pickle install $lib >> /tmp/docker-compose-buid-php.log;
   done
 }
 

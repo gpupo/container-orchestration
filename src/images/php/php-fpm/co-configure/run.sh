@@ -8,6 +8,9 @@ cat /etc/os-release && \
     apt-get install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
     apt-get install -qq -y curl libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
+function_print_banner "Pickle";
+wget https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
+
 function_print_banner "LIBS";
 apt-get install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
 
@@ -16,13 +19,13 @@ function_docker-php-ext-configure intl;
 function_print_banner "GD";
 docker-php-ext-configure gd --with-jpeg=/usr;
 
-function_docker-php-ext-install intl soap zip  bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
+function_docker-php-ext-install intl soap zip bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
 
 function_print_banner "APC";
 function_pecl_install apcu && function_docker-php-ext-enable apcu &&\
     function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
     function_pecl_install redis && function_docker-php-ext-enable redis && \
-    function_docker-php-ext-install gd  mysqli opcache ctype json xmlwriter;
+    function_docker-php-ext-install gd mysqli opcache ctype json xmlwriter;
 
 function_print_banner "AMQP";
     function_pecl_install amqp && \
