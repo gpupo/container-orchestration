@@ -2,6 +2,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "gpupo/common-dev-extra": "^1.2"
+        "gpupo/common-dev-extra": "*"
     }
 }
