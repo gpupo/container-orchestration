@@ -6,7 +6,7 @@ function_print_banner "TOOLS";
 cat /etc/os-release && \
     set -e; apt-get -qq update; apt-get install -qq -y --no-install-recommends apt-utils iputils-ping procps && \
     apt-get install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt-get install -qq -y curl libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
+    apt-get install -qq -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
 function_print_banner "Pickle";
 wget https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;

@@ -1,5 +1,5 @@
 #@see https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
-name: Buil Docker images at tag create
+name: Buil Docker Images at tag creation
 on:
   create:
     tags:
