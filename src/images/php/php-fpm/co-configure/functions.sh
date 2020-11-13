@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 touch /tmp/docker-compose-buid-php.log;
 

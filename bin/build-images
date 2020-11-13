@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source .env
 
 printf "\n----\n\t** $CO_VERSION\n\n";

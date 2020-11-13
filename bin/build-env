@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 cat .env.default > .env
 echo "###### > BUILDED VARS ######" >> .env
 

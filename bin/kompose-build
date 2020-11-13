@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #see http://kompose.io/user-guide/
 rm -rfv  src/kompose/*/*.yaml;
 kompose --file docker-compose.yml convert -c -o src/kompose/helm/;
