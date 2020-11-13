@@ -21,9 +21,9 @@ LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/conta
 COPY ./co-configure /usr/local/bin/co-configure
 
 COPY php.ini /usr/local/etc/php/
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY opcache-recommended.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
 COPY .bashrc /root/
-
 RUN /usr/local/bin/co-configure/run.sh
 
 
