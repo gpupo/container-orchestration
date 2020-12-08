@@ -21,6 +21,14 @@ function_docker-php-ext-configure intl
 function_print_banner "GD"
 docker-php-ext-configure gd --with-jpeg=/usr;
 
+
+# Possible values for ext-name:
+#   bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp hash 
+#   iconv imap intl json ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird 
+#   pdo_mysql pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar posix pspell readline reflection session 
+#   shmop simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader 
+#   xmlwriter xsl zend_test zip
+
 function_docker-php-ext-install intl soap zip bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
 
 function_print_banner "APC";
@@ -31,9 +39,6 @@ function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
 function_pecl_install redis && function_docker-php-ext-enable redis;
 
 function_print_banner "EXT MODULES"
-
-docker-php-ext-install;
-
 function_docker-php-ext-install gd mysqli opcache ctype json xmlwriter;
 
 function_print_banner "AMQP";
