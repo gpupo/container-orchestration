@@ -24,14 +24,4 @@ services:
         image: gpupo/container-orchestration:php-dev-${CO_VERSION}
         env_file:
             - .env
-    php-fpm-alpine:
-        build:
-            context: ./src/images/php/php-fpm-alpine/
-            args:
-              - PHP_VERSION=${PHP_VERSION}
-              - CO_VERSION=${CO_VERSION}
-              - BUILD_DATE=${BUILD_DATE}
-              - VCS_REF=${VCS_REF}
-        image: gpupo/container-orchestration:php-fpm-alpine-${CO_VERSION}
-        env_file:
-            - .env
+    
