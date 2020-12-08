@@ -15,23 +15,30 @@ function_print_banner "Pickle";
 wget -q https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
 
 
-function_print_banner "INTL";
-function_docker-php-ext-configure intl;
+function_print_banner "INTL"
+function_docker-php-ext-configure intl
 
-function_print_banner "GD";
-docker-php-ext-configure gd --with-jpeg=/usr;
+function_print_banner "GD"
+docker-php-ext-configure gd --with-jpeg=/usr
 
-function_docker-php-ext-install intl soap zip bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
+function_docker-php-ext-install intl soap zip bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar
 
-function_print_banner "APC";
-function_pecl_install apcu && function_docker-php-ext-enable apcu &&\
-    function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
-    function_pecl_install redis && function_docker-php-ext-enable redis && \
-    function_docker-php-ext-install gd mysqli opcache ctype json xmlwriter;
+function_print_banner "APC"
+function_pecl_install apcu && function_docker-php-ext-enable apcu
+
+function_print_banner "PECL MODULES"
+function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
+function_pecl_install redis && function_docker-php-ext-enable redis
+
+function_print_banner "EXT MODULES"
+
+RUN docker-php-ext-install
+
+function_docker-php-ext-install gd mysqli opcache ctype json xmlwriter
 
 function_print_banner "AMQP";
-    function_pecl_install amqp && \
-    function_docker-php-ext-enable amqp;
+function_pecl_install amqp && \
+function_docker-php-ext-enable amqp;
 
 function_end_build
 
