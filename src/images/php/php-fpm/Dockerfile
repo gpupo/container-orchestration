@@ -24,7 +24,12 @@ COPY php.ini /usr/local/etc/php/
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY opcache-recommended.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
 COPY .bashrc /root/
+
+RUN printf "Default modules:\n" && php -m
+
 RUN /usr/local/bin/co-configure/run.sh
+
+RUN printf "Final modules:\n" && php -m
 
 
 

@@ -3,7 +3,7 @@
 touch /tmp/docker-compose-buid-php.log;
 
 function_print_banner() {
-  printf "\n====|| \e[1;96m%s\e[m\n ||======\n" "$1";
+  printf "\n>>| \e[1;96m%s\e[m |>>\n" "$1";
 }
 
 function_docker-php-ext-enable() {
