@@ -15,12 +15,48 @@ function_print_banner "Pickle";
 wget -q https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
 
 
+
+# Default modules:
+#   Core
+#   ctype
+#   curl
+#   date
+#   dom
+#   fileinfo
+#   filter
+#   ftp
+#   hash
+#   iconv
+#   json
+#   libxml
+#   mbstring
+#   mysqlnd
+#   openssl
+#   pcre
+#   PDO
+#   pdo_sqlite
+#   Phar
+#   posix
+#   readline
+#   Reflection
+#   session
+#   SimpleXML
+#   sodium
+#   SPL
+#   sqlite3
+#   standard
+#   tokenizer
+#   xml
+#   xmlreader
+#   xmlwriter
+#   zlib
+
+
 function_print_banner "INTL"
 function_docker-php-ext-configure intl
 
 function_print_banner "GD"
 docker-php-ext-configure gd --with-jpeg=/usr;
-
 
 # Possible values for ext-name:
 #   bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp hash 
@@ -29,7 +65,7 @@ docker-php-ext-configure gd --with-jpeg=/usr;
 #   shmop simplexml snmp soap sockets sodium spl standard sysvmsg sysvsem sysvshm tidy tokenizer xml xmlreader 
 #   xmlwriter xsl zend_test zip
 
-function_docker-php-ext-install intl soap zip bcmath sockets exif fileinfo pdo pdo_mysql pdo_pgsql calendar;
+function_docker-php-ext-install intl soap zip bcmath sockets exif pdo_mysql pdo_pgsql calendar;
 
 function_print_banner "APC";
 function_pecl_install apcu && function_docker-php-ext-enable apcu;
@@ -39,7 +75,7 @@ function_pecl_install mongodb && function_docker-php-ext-enable mongodb && \
 function_pecl_install redis && function_docker-php-ext-enable redis;
 
 function_print_banner "EXT MODULES"
-function_docker-php-ext-install gd mysqli opcache ctype json xmlwriter;
+function_docker-php-ext-install gd mysqli opcache;
 
 function_print_banner "AMQP";
 function_pecl_install amqp && \
