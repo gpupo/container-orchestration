@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 cat .env.default > .env
+echo "" >> .env
 echo "###### > BUILDED VARS ######" >> .env
 
 CURRENT_TAG=$1

@@ -15,5 +15,7 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_UID }} --password-stdin
       - name: Build Env
         run: bin/build-env ${GITHUB_REF#refs/*/}
+      - name: Debug Env
+        run: cat .env
       - name: Build Images and Push
         run: bin/build-images -f
