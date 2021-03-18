@@ -11,6 +11,19 @@ services:
         image: gpupo/container-orchestration:php-fpm-${CO_VERSION}
         env_file:
             - .env
+    php-supervisor:
+        container_name: php-supervisor
+        build:
+            context: ./src/images/php/php-supervisor/
+            args:
+              - PHP_VERSION=${PHP_VERSION}
+              - CO_VERSION=${CO_VERSION}
+              - BUILD_DATE=${BUILD_DATE}
+              - VCS_REF=${VCS_REF}
+              - PHP_SUFIX=
+        image: gpupo/container-orchestration:php-supervisor-${CO_VERSION}
+        env_file:
+            - .env
     php-dev:
         container_name: php-dev
         build:
