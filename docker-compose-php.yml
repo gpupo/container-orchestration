@@ -18,9 +18,6 @@ services:
             args:
               - PHP_VERSION=${PHP_VERSION}
               - CO_VERSION=${CO_VERSION}
-              - BUILD_DATE=${BUILD_DATE}
-              - VCS_REF=${VCS_REF}
-              - PHP_SUFIX=
         image: gpupo/container-orchestration:php-supervisor-${CO_VERSION}
         env_file:
             - .env
