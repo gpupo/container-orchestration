@@ -58,18 +58,21 @@ tagImages() {
     do
         SIMPLE="${FULLNAME/-$CO_VERSION/}"
         printf "$FULLNAME $COL_SPACE $SIMPLE $COL_SPACE $LATEST\n";
-        docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$SIMPLE
+        # docker tag gpupo/container-orchestration:$FULLNAME gpupo/container-orchestration:$SIMPLE
     done
 }
 
-# function_helper_question "Tag images? "
-# if [[ $REPLY =~ ^[Yy]$ ]]
-# then
-#     tagImages | column -t
-# fi
+function_helper_question "Tag images? "
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    tagImages | column -t
+fi
 
 function_helper_question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    docker push gpupo/container-orchestration
+    printf ">> Current Tags:\n";
+    docker image ls
+    printf ">> Pushing Tags..\n";
+    docker push gpupo/container-orchestration --all-tags
 fi
