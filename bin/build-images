@@ -71,5 +71,8 @@ tagImages() {
 function_helper_question "Publish images to Docker Hub? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    docker push gpupo/container-orchestration
+    printf ">> Current Tags:\n";
+    docker image ls | grep container-orchestration;
+    printf ">> Pushing Tags..\n";
+    docker push gpupo/container-orchestration --all-tags
 fi
