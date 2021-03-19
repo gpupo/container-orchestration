@@ -24,6 +24,7 @@ then
 
     declare -a serviceList=(\
       php-fpm \
+      php-supervisor \
       php-dev \
       nginx-core \
       nginx-upstream \
