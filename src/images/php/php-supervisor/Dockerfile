@@ -7,7 +7,7 @@ LABEL org.label-schema.name="gpupo/container-orchestration:php-supervisor"
 LABEL org.label-schema.description="Image with PHP ${PHP_VERSION} FPM and Debian, and supervisord.org"
 LABEL org.label-schema.docker.cmd="docker run -v "$PWD":/var/www/app gpupo/container-orchestration:php-supervisor"
 
-COPY ./messenger-worker.conf /etc/supervisor/conf.d/messenger_worker.conf
+COPY ./supervisord-custom.conf ./supervisord-custom.conf
 COPY ./co-configure/run-supervisor.sh /usr/local/bin/co-configure/run-supervisor.sh
 RUN /usr/local/bin/co-configure/run-supervisor.sh
 
