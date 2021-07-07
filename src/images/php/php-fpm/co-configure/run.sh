@@ -8,6 +8,10 @@ cat /etc/os-release && \
     apt install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
     apt install -qq -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
+function_print_banner "GIT CONFIG";
+git config --global user.email "php-fpm@docker.noreply.internal"
+git config --global user.name "PHP FPM Docker Instance"
+
 function_print_banner "LIBS";
 apt install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
 
@@ -99,7 +103,6 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
-
 mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
 
 #INFO
