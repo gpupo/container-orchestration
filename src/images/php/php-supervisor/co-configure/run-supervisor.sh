@@ -3,6 +3,6 @@
 source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "supervisor";
-apt-get install -qq -y supervisor
+apt-get install -q -y supervisor
 
 function_end_build
