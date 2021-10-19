@@ -4,19 +4,19 @@ source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "TOOLS";
 cat /etc/os-release && \
-    set -e; apt -qq update; apt install -qq -y --no-install-recommends apt-utils iputils-ping procps && \
-    apt install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt install -qq -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
+    set -e; apt  update; apt install  -y --no-install-recommends apt-utils iputils-ping procps && \
+    apt install  -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
+    apt install  -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
 function_print_banner "GIT CONFIG";
 git config --global user.email "php-fpm@docker.noreply.internal"
 git config --global user.name "PHP FPM Docker Instance"
 
 function_print_banner "LIBS";
-apt install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
+apt install  -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
 
 function_print_banner "Pickle";
-wget -q https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
+wget  https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
 
 
 
@@ -100,7 +100,7 @@ usermod --shell /bin/bash www-data && \
 function_print_banner "Prepare Composer";
 # https://getcomposer.org/download/
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 mv -v composer.phar /usr/local/bin/composer; chmod +x /usr/local/bin/composer;
