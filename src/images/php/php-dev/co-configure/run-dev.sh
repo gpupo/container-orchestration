@@ -6,7 +6,7 @@ function_print_banner "xdebug";
 function_pecl_install xdebug-2.7.2 && \
     function_docker-php-ext-enable xdebug;
 
-apt-get install -qq -y gcc g++ make gnupg2 libxslt-dev && \
+apt-get install -q -y gcc g++ make gnupg2 libxslt-dev && \
     function_docker-php-ext-install xsl && \
     function_docker-php-ext-install xmlrpc
 
@@ -47,6 +47,6 @@ curl --compressed -o- -L https://yarnpkg.com/install.sh | bash && \
   echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> /root/.bashrc;
 
 #Extra Tools
-apt-get install -qq -y rsync bash-completion
+apt-get install -q -y rsync bash-completion
 
 function_end_build
