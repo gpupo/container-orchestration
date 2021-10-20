@@ -4,16 +4,16 @@ source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "TOOLS";
 cat /etc/os-release && \
-    set -e; apt -qq update; apt install -qq -y --no-install-recommends apt-utils iputils-ping procps && \
-    apt install -qq -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt install -qq -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
+    set -e; apt -q update; apt install -q -y --no-install-recommends apt-utils iputils-ping procps && \
+    apt install -q -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
+    apt install -q -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
 
 function_print_banner "GIT CONFIG";
 git config --global user.email "php-fpm@docker.noreply.internal"
 git config --global user.name "PHP FPM Docker Instance"
 
 function_print_banner "LIBS";
-apt install -qq -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
+apt install -q -y libcurl4-openssl-dev pkg-config libssl-dev telnet vim netcat libonig-dev librabbitmq-dev;
 
 function_print_banner "Pickle";
 wget -q https://github.com/FriendsOfPHP/pickle/releases/latest/download/pickle.phar && chmod +x pickle.phar && mv pickle.phar /usr/local/bin/pickle;
