@@ -4,9 +4,9 @@ source /usr/local/bin/co-configure/functions.sh
 
 function_print_banner "TOOLS";
 cat /etc/os-release && \
-    set -e; apt  update; apt install -y --no-install-recommends apt-utils iputils-ping procps && \
-    apt install  -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
-    apt install  -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev;
+    set -e; apt  update; apt install -q -y --no-install-recommends apt-utils iputils-ping procps && \
+    apt install -q -y git unzip zlib1g-dev libpng-dev libjpeg-dev gettext-base libxml2-dev libzip-dev && \
+    apt install -q -y curl wget libmcrypt-dev default-mysql-client libicu-dev libpq-dev nginx;
 
 function_print_banner "GIT CONFIG";
 git config --global user.email "php-fpm@docker.noreply.internal"
