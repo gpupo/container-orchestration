@@ -1,0 +1,4 @@
+#/bin/sh
+
+PHP_SERVER=${PHP_SERVER:-php}
+echo "upstream php-upstream { server ${PHP_SERVER}:9000; }" > /etc/nginx/sites-enabled/upstream.conf;
