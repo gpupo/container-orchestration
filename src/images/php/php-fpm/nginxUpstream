@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 PHP_SERVER=${PHP_SERVER:-php}
 echo "upstream php-upstream { server ${PHP_SERVER}:9000; }" > /etc/nginx/conf.d/upstream.conf;
