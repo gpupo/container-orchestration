@@ -25,9 +25,9 @@ COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY opcache-recommended.ini /usr/local/etc/php/conf.d/opcache-recommended.ini
 COPY .bashrc /root/
 
-COPY ./nginxUpstream /bin/nginxUpstream
-
 COPY entrypoint.sh /etc/entrypoint.sh
+
+
 
 RUN mkdir -p /var/tmp/nginx && chown -R www-data:www-data /var/tmp/nginx/
 
@@ -40,9 +40,10 @@ RUN mkdir -p /var/lib/nginx/tmp/client_body /var/log/nginx \
 RUN printf "Default modules:\n"; php -m
 RUN /usr/local/bin/co-configure/run.sh
 RUN printf "Final modules:\n"; php -m
-
+COPY ./default /etc/nginx/sites-available/default
+COPY ./upstream.conf /etc/nginx/sites-enabled/upstream.conf
+ENTRYPOINT ["/etc/entrypoint.sh"]
 WORKDIR /var/www/app
 EXPOSE 80
-ENTRYPOINT ["/etc/entrypoint.sh"]
 
-CMD ["sh", "-c", "nginxUpstream; nginx"]
+
