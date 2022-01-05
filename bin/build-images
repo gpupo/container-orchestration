@@ -39,7 +39,7 @@ then
         * manual command: docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml build ${serviceName};
         \n";
 
-        docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml --log-level INFO build ${serviceName};
+        docker-compose -f docker-compose-php.yml -f docker-compose-nginx.yml build ${serviceName};
 
         if [ $? -eq 0 ]; then
             printf ">> Successfully builded image [${serviceName}] ${CO_VERSION}\n";
